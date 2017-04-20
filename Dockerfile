@@ -34,8 +34,8 @@ RUN /opt/conda/bin/conda install jupyter -y --quiet
 # add some dependencies
 RUN pip install nilearn
 
-ADD conwhat/ /opt/ConWhAt/conwhat/
+ADD ConWhAt/ /opt/ConWhAt/ConWhAt/
 ADD config.yaml /opt/ConWhAt/config.yaml
 ENV PYTHONPATH /opt/ConWhAt:$PYTHONPATH
 
-ENTRYPOINT /opt/conda/bin/jupyter notebook --notebook-dir=/opt/ConWhAt/examples --ip='*' --port=8888 --no-browser
+ENTRYPOINT /opt/conda/bin/jupyter notebook --notebook-dir=/opt/ConWhAt/ConWhAt/scratch --ip='*' --port=8888 --no-browser
