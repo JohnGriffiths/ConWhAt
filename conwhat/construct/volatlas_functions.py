@@ -257,3 +257,43 @@ def make_group_visitation_map(cnxn_name,sub_vismaps,grp_vismap_fname,subs_list):
 
 
 
+
+
+"""
+Concatenate group visitation maps
+"""
+
+
+def concat_grp_vismaps(fstr,nrois,outfstr):
+
+  for roi1 in range(0,nrois):
+    roi1_imslist,roi1_numslist = [],[] 
+    for roi2 in range(roi1,nrois):
+      f =  fstr.format(roi1=roi1,roi2=roi2)
+      if os.path.isfile(f):
+        roi1_imslist.append(f)
+        roi1_numslist.append(roi2)
+
+    if len(roi1_imslist) > 0:
+      
+      roi1_cat_img = concat_imgs(roi1_imslist)
+      roi1_cat_file = outfstr.format(roi1)
+      print '...writing cat nii to file %s' %roi1_cat_file
+      roi1_cat_img.to_filename(roi1_cat_file)
+
+      roi1_cat_idxfile = roi1_cat_file.replace('.nii.gz', 'idxlist.txt')
+      print '...writing cat idxslist to file %s' %roi1_cat_idxlist
+      open(roi1_cat_idxlist, 'w').writelines(['%s\n' %r for r in roi1_numslist])
+
+
+
+
+
+"""
+Make mappings files
+"""
+
+# ...
+
+
+
