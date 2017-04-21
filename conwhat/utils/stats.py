@@ -17,7 +17,8 @@ from joblib import Parallel,delayed
 from readers import igzip4dnii
 
 
-jl_cache_dir = '/hecuba/mcintosh_lab/john/Data/joblib_cache'
+jl_cache_dir = '/tmp'
+
 
 abd = os.path.split(__file__)[0]  + '/../data'
 
