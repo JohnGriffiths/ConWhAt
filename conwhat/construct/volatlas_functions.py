@@ -1,184 +1,113 @@
-"""
-======================================================
-ConWhAt Volumetric Atlas Construction Functions
-======================================================
 
 
-JG 20/04/2017
-
-"""
 
 
-# Importage
+def make_sub_cnxn_mappings(sub,dpy_file,parc_file,outdir,overwrite=True):
 
-import os
-import numpy as np
-
-from dipy.io import Dpy
-from dipy.tracking.utils import density_map,connectivity_matrix
-
-from nipype.interfaces.fsl import ApplyWarp
-
-import nibabel as nib
-
-from joblib import Parallel,delayed 
-
-
-"""
-Subject visitation maps
-"""
-
-
-def make_sub_visitation_maps(sub,dpy,parc,warp,ref,outdir):
+  import os,h5py,numpy as np,nibabel as nib
+  from dipy.io import Dpy
+  from dipy.tracking.utils import connectivity_matrix,length
     
-  """
-  Inputs:
-  
-    sub     - subject ID
-    
-    dpy     - dpy file
-    
-    parc    - parc file
-    
-    warp    - nat2std warp file
-    
-    ref     - ref file
-    
-    outdir  - output directory.  
-              Will be created if not already present. 
-    
-  
-  Creates:
-  
-    - Visitation maps (nifti files) for each connetion
-    - Connections list file
-  
-  Returns:
-  
-    - 
-    
-  
-  
-  Usage: 
-  
-    ...
-  
-  """
-
-  print '\n\nMaking visitation maps for sub %s' %sub
-    
-    
-  # Connections list file
-  cnxns_list_file = '%s/cnxns_%s.txt'  %(outdir,sub)
-
-  # Connectivity matrix file
-  conmat_file = '%s/conmat_%s.txt' %(outdir,sub)
-    
-  # Filename template for visitation map files    
-  vismap_nat_str = '%s/vismap_%s_' %(outdir,sub) + '%s-%s_nat.nii.gz'
-  vismap_std_str = vismap_nat_str.replace('_nat', '_std')
-    
-    
-  # Create output directory if not already present
   if not os.path.isdir(outdir): os.makedirs(outdir)
-    
-  # Load tractography streamlines
-  print '\nLoading dipy streamlines'
-  D = Dpy(dpy, 'r')
+
+  cnxn_inds_outfile = '%s/G_%s.h5' %(outdir,sub)
+  cnxn_lens_outfile = '%s/L_%s.h5' %(outdir,sub)
+  cnxn_mat_outfile = '%s/M_%s.txt' %(outdir,sub)
+
+  if overwrite == True: 
+    for f in [cnxn_inds_outfile, cnxn_lens_outfile, cnxn_mat_outfile]:
+      if os.path.isfile(f):
+        print 'file exists (%s). Removing...' %f
+        os.system('rm %s' %f)
+        
+
+  print '...loading streamlines'
+  D = Dpy(dpy_file, 'r')
   dpy_streams = D.read_tracks()
   D.close()
 
-  # Load parcellation file
-  parc_img = nib.load(parc)
+
+  print '...loading parcellation'
+  parc_img = nib.load(parc_file)
   parc_dat = parc_img.get_data().astype(np.int)
 
-  # (This is specific to the way the dpy files were saved)
   affine = np.eye(4)
 
-  # Compute connectivity matrix and streamline labels
-  print '\n...computing connectivity'
+  print '...computing connectivity'
   M,G = connectivity_matrix(dpy_streams,parc_dat,affine=affine,
-                            return_mapping=True,mapping_as_streamlines=True)
+                            return_mapping=True,mapping_as_streamlines=False)
 
-  # Save connections list
-  F = open(cnxns_list_file, 'w')
-  F.writelines(['%s %s\n' %(str(g[0]),str(g[1])) for g in G.keys()])
+  print '...computing lengths'
+  L = {k: list(length([dpy_streams[vv] for vv in v])) for k,v in G.items()}
+
+
+  print '...writing cnxn inds to file'
+  F = h5py.File(cnxn_inds_outfile, 'a')
+  for k,v in G.items():  F['%s-%s' %(k[0],k[1])] = v
   F.close()
-    
-  # Save connectivity matrix
-  np.savetxt(conmat_file, M)
-    
 
+  print '...writing cnxn lens to file'
+  F = h5py.File(cnxn_lens_outfile, 'a')
+  for k,v in L.items():  F['%s-%s' %(k[0],k[1])] = v
+  F.close()
+
+  print '...writing connectivity matrix to file'
+  np.savetxt(cnxn_mat_outfile,M)
+
+
+  return cnxn_inds_outfile,cnxn_lens_outfile,cnxn_mat_outfile
+
+
+def make_sub_cnxn_visitation_map(sub,dpy_file,parc_file,warp_file,ref_file,
+                                 cnxn_inds_file,cnxn_name,vismap_fstr):
     
-  def make_and_warp_dmap(inlist):
-        
-    pair_it,(pair,fibs) = inlist
-        
-    print '...%s; %s-%s (%s of %s)' %(sub,pair[0],pair[1],pair_it+1,len(G.keys()))
+  overwrite=True
+    
+  import os,h5py,numpy as np,nibabel as nib
+  from dipy.io import Dpy
+  from dipy.tracking.utils import connectivity_matrix,length,density_map
+  from nipype.interfaces.fsl import ApplyWarp    
+       
+  F = h5py.File(cnxn_inds_file, 'r')
+  if cnxn_name in F.keys():
+    stream_idxs = F[cnxn_name].value
+    F.close()
 
-    outfile_nat = vismap_nat_str %(pair[0],pair[1])
-    outfile_std = vismap_std_str %(pair[0],pair[1])
+    D = Dpy(dpy_file, 'r')
+    streams = D.read_tracksi(stream_idxs)
+    D.close()
 
-    dm = density_map(fibs,parc_img.shape,affine=affine)
+    parc_img = nib.load(parc_file)
+
+    affine = np.eye(4)
+
+
+    outfile_nat = os.path.abspath('vismap_nat_%s.nii.gz' %cnxn_name)
+    outfile_std =  os.path.abspath(vismap_fstr %cnxn_name)
+
+    dm = density_map(streams,parc_img.shape,affine=affine)
     dm_img = nib.Nifti1Image(dm.astype("int16"), parc_img.affine)
     dm_img.to_filename(outfile_nat)
 
+    print 'warping cnxn image to standard space'
     aw = ApplyWarp(in_file=outfile_nat,
-                   out_file=outfile_std,
-                   ref_file =ref,
-                   field_file =warp)
+                 out_file=outfile_std,
+                 ref_file =ref_file,
+                 field_file =warp_file)
     aw.run()
-    
-  alist = []
-  for pair_it,(pair,fibs) in enumerate(G.items()): alist.append([pair_it,(pair,fibs)])
-   
-  for a in alist:
-    make_and_warp_dmap(a)           
-  #Parallel(n_jobs=4)(delayed(make_and_warp_dmap)(a) for a in alist)
-    
-    
-    
-  print '\nFinished making visitation maps for subject %s' %sub
 
-        
-        
-        
-        
-    
-"""
-Group visitation maps
-"""
+  else:
+    outfile_std = 'cnxn not found'
+    F.close()
 
-   
-def make_group_visitation_map(cnxn_name,sub_vismaps,grp_vismap_fname,subs_list):
-  """
-  
-  Inputs:
-  
-    cnxn_name        - connection name
-    
-    sub_vismaps      - list of input filepaths
-    
-    grp_vismap       - output filepath
-    
-    subs_list        - list of subject IDs
-    
-    
-  
-  Creates files:
-  
-  
-  
-  
-  Usage:
-  
-  
-  """
-    
+  return outfile_std
+
+
+def make_group_cnxn_visitation_map(cnxn_name,sub_vismaps,grp_vismap_fstr,subs_list):
+
   import os
   import numpy as np
   import nibabel as nib
-    
 
   # remove any subs with data missing
   num_subs_orig = len(subs_list)
@@ -198,22 +127,22 @@ def make_group_visitation_map(cnxn_name,sub_vismaps,grp_vismap_fname,subs_list):
 
     print '\n\nMaking group map for cnxn %s\n  (%s subs)' %(cnxn_name,num_subs)
 
-    grp_vismap_fpath = os.path.abspath(grp_vismap_fname)
-    grp_vismap_norm_fpath = os.path.abspath(grp_vismap_fname.replace('.nii.gz', '_norm.nii.gz'))
+    grp_vismap_fpath = os.path.abspath(grp_vismap_fstr %cnxn_name)
+    grp_vismap_norm_fpath = grp_vismap_fpath.replace('.nii.gz', '_norm.nii.gz')
 
     subs_list_file = grp_vismap_fpath.replace('.nii.gz', '_subslist.txt')
 
 
- 
+
     # Load reference image
     ref_img = nib.load(sub_vismaps[0])
 
-    # Initialize group visitation map 
+    # Initialize group visitation map
     grp_vismap_dat = np.zeros_like(ref_img.get_data()).astype('int16')
 
-  
+
     for f_it, f in enumerate(sub_vismaps):
-        
+
       print '...adding %s' %f
 
       # Read in subject map
@@ -228,23 +157,23 @@ def make_group_visitation_map(cnxn_name,sub_vismaps,grp_vismap_fname,subs_list):
 
 
     # Visitation map normalized by number of subjects (i.e. mean)
-    # (...note we use the original subject list count. The result 
-    #  is a visitation probability, relative to the original number 
+    # (...note we use the original subject list count. The result
+    #  is a visitation probability, relative to the original number
     #  of subject and vismap files supplied)
 
     grp_vismap_norm_dat = grp_vismap_dat / np.float32(num_subs_orig)
 
-        
+
     # Write maps to file
     print '\nwriting group visitation map image to %s' %grp_vismap_fpath
     grp_vismap_img = nib.Nifti1Image(grp_vismap_dat,ref_img.affine)
     grp_vismap_img.to_filename(grp_vismap_fpath)
-  
+
     print '\nwriting subnum-normalized group visitation map image to %s' %grp_vismap_norm_fpath
     grp_vismap_norm_img = nib.Nifti1Image(grp_vismap_norm_dat,ref_img.affine)
     grp_vismap_norm_img.to_filename(grp_vismap_norm_fpath)
 
-  
+
     # Write subject list to file
     if subs_list != None:
       print 'writing subs list to %s' %subs_list_file
@@ -258,42 +187,50 @@ def make_group_visitation_map(cnxn_name,sub_vismaps,grp_vismap_fname,subs_list):
 
 
 
-
 """
 Concatenate group visitation maps
 """
 
+def aggregate_grp_vismap(in_files,cnxn_names,outfname):
 
-def concat_grp_vismaps(fstr,nrois,outfstr):
+  import os,sys,glob
+  from nilearn.image import concat_imgs
+  import nibabel as nib
+    
+    
+  # Filter and order in files to match cnxn names list
+  # Write aggregated vismap nifti file + text list of cnxn names
+    
+  # Note: need to make sure that cnxn name string doesn't acceidentally
+  # identify the wrong files (e.g. 1-2 doesn't give 51-25)
+  # ...do this by adding underscores before and after cnxn_name 
+    
+  agg_image_file = os.path.abspath(outfname + '.nii.gz')
+  agg_list_file = agg_image_file.replace('.nii.gz', '_cnxn_list.txt')
 
-  for roi1 in range(0,nrois):
-    roi1_imslist,roi1_numslist = [],[] 
-    for roi2 in range(roi1,nrois):
-      f =  fstr.format(roi1=roi1,roi2=roi2)
-      if os.path.isfile(f):
-        roi1_imslist.append(f)
-        roi1_numslist.append(roi2)
+  filtered_files,filtered_cnxns = [],[]
+  for c in cnxn_names:
+    for f in in_files:
+      if f != None:
+        if '_%s_' %c in f:
+          filtered_files.append(f)
+          filtered_cnxns.append(c)
 
-    if len(roi1_imslist) > 0:
-      
-      roi1_cat_img = concat_imgs(roi1_imslist)
-      roi1_cat_file = outfstr.format(roi1)
-      print '...writing cat nii to file %s' %roi1_cat_file
-      roi1_cat_img.to_filename(roi1_cat_file)
+  if len(filtered_cnxns) > 0:
+            
+    cat_img = concat_imgs(filtered_files)
+     
+    print '...writing concatenated nii to file %s' %agg_image_file
+    cat_img.to_filename(agg_image_file)
+        
+    open(agg_list_file, 'w').writelines(['%s\n' %c for c in filtered_cnxns])
+  
 
-      roi1_cat_idxfile = roi1_cat_file.replace('.nii.gz', 'idxlist.txt')
-      print '...writing cat idxslist to file %s' %roi1_cat_idxlist
-      open(roi1_cat_idxlist, 'w').writelines(['%s\n' %r for r in roi1_numslist])
-
-
-
-
-
-"""
-Make mappings files
-"""
-
-# ...
-
-
+  else: 
+        
+    print 'no matching files found'
+    agg_image_file,agg_list_file = 'N/A', 'N/A'
+    
+  return agg_image_file,agg_list_file          
+        
 
