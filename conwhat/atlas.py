@@ -249,11 +249,12 @@ class _StreamAtlas(_Atlas):
     
   def __init__(self,atlas_name):
 
+    self.atlas_name = atlas_name
 
     # Load streamlinetric atlas info
 
-    self.sfms = load_stream_file_mappings(atlas_name)
-    self.bbox = load_stream_bboxes(atlas_name)
+    self.sfms,self.atlas_dir = load_stream_file_mappings(atlas_name=atlas_name)
+    self.bbox = load_stream_bboxes(atlas_name=atlas_name)
 
 
 
@@ -274,11 +275,31 @@ class StreamConnAtlas(_StreamAtlas):
   """
 
   def __init__(self,atlas_name): 
+    # A lot of this is shared between StreamConn atlas and VolConn atlas. 
+    # modify...
 
     _StreamAtlas.__init__(self, atlas_name)
 
     # Load connectivity info
-    self.G = load_connectivity(atlas_name)
+
+    ws,rls,tls,rxyzs,rnii,ctx,hs,rmfslh,rmfsrh = load_connectivity(atlas_name)
+
+    self.weights = ws
+    self.region_labels = rls
+
+    if tls is not None: self.tract_lengths = tls
+    if rxyzs is not None: self.region_xyzs = rxyzs
+    if rnii is not None: self.region_nii = rnii
+    if ctx is not None: self.cortex = ctx
+    if hs is not None: self.hemispheres = hs
+    if rmfslh is not None: self.region_mapping_fsav_lh = rmfslh
+    if rmfsrh is not None: self.region_mapping_fsav_rh = rmfsrh
+
+
+    # Compile node and connectivity info into a networkx graph
+    self.Gnx = make_nx_graph(self.sfms,self.bbox,ws,rls,hs,ctx)
+
+
 
 
   def modify_connectome(self, name='mc1',function=''):
