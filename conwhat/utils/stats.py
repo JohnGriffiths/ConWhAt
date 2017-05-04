@@ -301,6 +301,52 @@ def get_intersection(bba,bbb):
 
 
 
+def compute_streams_in_roi(roi_file,sfms,bboxes,n_jobs=1,atlas_name=None):
+
+  #,idxs,readwith='indexgzip',n_jobs=1,atlas_name=None,run_type='sharedmem'):
+  """
+  """
+
+  print 'computing hit stats for roi %s' % roi_file
+
+  roi_img = nib.load(roi_file)
+  roi_dat = roi_img.get_data()
+
+  if idxs == 'all': idxs = range(sfms.shape[0])
+
+  # DON'T DO BBOX STUFF YET...
+  # only read files with overlapping bounding boxes
+  bbox_isol,bbox_propol = compute_roi_bbox_overlaps(bboxes,roi_file) #est_file)
+  bbox_isol_idx = np.nonzero(bbox_isol)[0]
+  idxsinbbox = [idx for idx in idxs if idx in bbox_isol_idx]
+
+
+  def calc_streams_in_roi(dpy_file,roi_dat,stream_idxs):
+    aff_eye = np.eye(4)
+    D = Dpy(dpy_file, 'r')
+    streams = D.read_tracksi(stream_idxs)
+    D.close()
+    streamsinroi = list(target_line_based(streams,roi_dat,aff_eye))
+    return streamsinroi
+
+  
+  sir = Parallel(n_jobs=n_jobs,temp_folder=jl_cache_dir)\
+                (delayed(calc_streams_in_roi)\
+                (dpy_file,roi_dat,sfms.ix[idx]['stream_idxs']) for idx in idxsinbbox)
+
+  idxsused = idxsinbbox
+
+  len_sir = [len(s) for s in sir]
+
+  df = pd.DataFrame(len_sir, index=idxsused)
+  df.columns.names = ['len']
+  df.index.names = ['idx']
+  
+  return df
+
+
+
+
 
 
 def compute_vol_scalar_stats():
