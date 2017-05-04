@@ -5,7 +5,7 @@ Utils for reading ConWhAt and external data files
 # Author: John Griffiths
 # License: simplified BSD
 
-import os,sys,yaml
+import os,sys,yaml,h5py
 
 import numpy as np,networkx as nx, pandas as pd
 import nibabel as nib, nilearn as nl
@@ -123,14 +123,81 @@ def make_nx_graph(vfms,bboxes,weights,region_labels,hemis,cortex):
 
 
 
+
 def load_stream_file_mappings(atlas_name=None,atlas_dir=None):
 
-  print 'loading stream file mappings'
+  print  'loading streamline file mappings'
+
+  if not atlas_dir: atlas_dir = os.path.join(abd,atlas_name)
+
+  F = h5py.File(atlas_dir + '/mappings.h5', 'r')
+  KVs = {k: v.value for k,v in F.items()}
+  F.close()
+  mappings = pd.DataFrame(np.array(KVs.values()),
+                             index=KVs.keys())
+  mappings.columns = ['idxlist']
+  mappings.index.names = ['name']
+  mappings = mappings.reset_index()
+
+  return mappings,atlas_dir
 
 
+
+# (this is identical to load vox bboxes. Remove both
+#  and replace with single func?)
 def load_stream_bboxes(atlas_name=None,atlas_dir=None):
 
-  print 'loading stream bbox'
+  print  'loading stream bbox'
+
+  if not atlas_dir: atlas_dir = os.path.join(abd,atlas_name)
+
+  bbox = pd.read_csv(atlas_dir + '/bounding_boxes.txt', sep=',')
+
+  return bbox
+
+
+
+def make_streams_nx_graph(sfms,bboxes,weights,region_labels,hemis,cortex):
+
+  
+
+
+  # I THINK THIS CAN BE THE SAME FUNC FOR BOTH \
+  # VOLUMETRIC AND STREAMLINETRIC
+  # ...just writing one for streamlines first to get clear...
+
+
+  G = nx.Graph()
+
+  # add node info
+  for node_it,node in enumerate(region_labels):
+
+    rl = region_labels[node_it]
+    hemi = hemis[node_it]
+    ctx = cortex[node_it]
+
+    G.add_node(node_it, attr_dict={'region_label': rl,
+                                   'hemisphere': hemi,
+                                   'cortex': ctx})
+
+  # add edge info
+  for idx in sfms.index:
+    sfm = sfms.ix[idx]
+    roi1,roi2 = sfm['name'].split('_to_')
+    roi1 = int(roi1); roi2 = int(roi2)
+    ad = sfm.to_dict()
+    ad.update(bboxes.ix[idx])
+
+    ad['idx'] = idx
+    ad['weight'] = weights[roi1,roi2]
+
+    n1,n2 = G.node[roi1],G.node[roi2]
+    fullname = n1['region_label'] + '_to_' + n2['region_label']
+    ad['fullname'] = fullname
+
+    G.add_edge(roi1,roi2,attr_dict=ad)
+
+
 
 
 
