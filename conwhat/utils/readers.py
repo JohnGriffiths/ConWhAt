@@ -151,7 +151,8 @@ def load_stream_bboxes(atlas_name=None,atlas_dir=None):
 
   if not atlas_dir: atlas_dir = os.path.join(abd,atlas_name)
 
-  bbox = pd.read_csv(atlas_dir + '/bounding_boxes.txt', sep=',')
+  bbox = pd.read_csv(atlas_dir + '/bounding_boxes.txt', sep=',',
+                     names=['xmin', 'xmax', 'ymin', 'ymax', 'zmin', 'zmax'])
 
   return bbox
 
