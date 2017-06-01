@@ -224,23 +224,31 @@ def igzip4dnii(fname,inds3d,
   fmap['image'].fileobj = fobj
   image = nib.Nifti1Image.from_file_map(fmap)
     
-    
-  # Use the image ArrayProxy to access the  
-  # data - the index will automatically be
-  # built as data is accessed.
- 
-  dims0,dims1,dims2,dims3 = image.shape
-  #if inds0d == 'all': inds0d = range(dims0)
-  #if inds1d == 'all': inds1d = range(dims1)
-  #if inds2d == 'all': inds2d = range(dims2) 
+  
 
-  dat = np.squeeze(image.dataobj[:,:,:,int(inds3d)]) 
-  #dat = np.squeeze(image.dataobj[inds0d,inds1d,inds2d,int(inds3d)])
-  #if type(inds3d) == int: # len(inds3d) == 1:
-  #  dat = np.squeeze(image.dataobj[inds0d,inds1d,inds2d,int(inds3d)])
-  #else:
-  #  dat = np.array([(image.dataobj[inds0d,inds1d,inds2d,int(i3)]) for i3 in inds3d])
-  #  dat = dat.reshape([dims[1],dims[2],dims[3],dims[0]])
+  if inds3d == 'N/A':
+    dims0,dims1,dims2 = image.shape
+    dat = np.squeeze(image.dataobj[:,:,:])
+
+  else:
+
+    # Use the image ArrayProxy to access the  
+    # data - the index will automatically be
+    # built as data is accessed.
+ 
+    dims0,dims1,dims2,dims3 = image.shape
+
+    #if inds0d == 'all': inds0d = range(dims0)
+    #if inds1d == 'all': inds1d = range(dims1)
+    #if inds2d == 'all': inds2d = range(dims2) 
+
+    dat = np.squeeze(image.dataobj[:,:,:,int(inds3d)]) 
+    #dat = np.squeeze(image.dataobj[inds0d,inds1d,inds2d,int(inds3d)])
+    #if type(inds3d) == int: # len(inds3d) == 1:
+    #  dat = np.squeeze(image.dataobj[inds0d,inds1d,inds2d,int(inds3d)])
+    #else:
+    #  dat = np.array([(image.dataobj[inds0d,inds1d,inds2d,int(i3)]) for i3 in inds3d])
+    #  dat = dat.reshape([dims[1],dims[2],dims[3],dims[0]])
     
   return dat
 
