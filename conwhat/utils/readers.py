@@ -9,6 +9,8 @@ import os,sys,yaml,h5py
 
 import numpy as np,networkx as nx, pandas as pd
 import nibabel as nib, nilearn as nl
+from nibabel.affines import apply_affine
+from dipy.io import Dpy
 import indexed_gzip as igzip
 
 
