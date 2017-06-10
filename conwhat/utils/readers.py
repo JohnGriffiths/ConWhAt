@@ -253,3 +253,30 @@ def igzip4dnii(fname,inds3d,
   return dat
 
 
+def dpy_to_trk(dpy_file,inds,ref,outfile):
+  
+    if os.path.isfile(ref):
+        ref_img = nib.load(ref)
+    else: 
+        ref_img = ref
+        
+    # Make trackvis header 
+    hdr = nib.trackvis.empty_header()
+    hdr['voxel_size'] = ref_img.get_header().get_zooms()   
+    hdr['dim'] = ref_img.shape
+    hdr['voxel_order'] = "LAS"#"RAS"
+    hdr['vox_to_ras'] = ref_img.affine
+    zooms = ref_img.header.get_zooms()
+
+    # Load streamlines
+    D = Dpy(dpy_file, 'r')
+    dpy_streams = D.read_tracksi(inds)
+    D.close()
+    
+    # Convert to trackvis space + format
+    [apply_affine(hdr['vox_to_ras'], s*zooms) for s in dpy_streams]    
+    
+    trk_streams = [(s,None,None) for s in dpy_streams]
+    
+    nib.trackvis.write(outfile,trk_streams,hdr)
+
