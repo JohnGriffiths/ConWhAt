@@ -10,6 +10,9 @@ import os,sys,yaml
 import numpy as np,networkx as nx, pandas as pd
 import nibabel as nib, nilearn as nl
 
+from dipy.io import Dpy
+from dipy.tracking.utils import target_line_based
+
 import indexed_gzip as igzip
 
 from joblib import Parallel,delayed
@@ -300,8 +303,7 @@ def get_intersection(bba,bbb):
 
 
 
-
-def compute_streams_in_roi(roi_file,sfms,bboxes,n_jobs=1,atlas_name=None):
+def compute_streams_in_roi(roi_file,dpy_file,sfms,bboxes,idxs,n_jobs=1,atlas_name=None):
 
   #,idxs,readwith='indexgzip',n_jobs=1,atlas_name=None,run_type='sharedmem'):
   """
@@ -321,28 +323,43 @@ def compute_streams_in_roi(roi_file,sfms,bboxes,n_jobs=1,atlas_name=None):
   idxsinbbox = [idx for idx in idxs if idx in bbox_isol_idx]
 
 
-  def calc_streams_in_roi(dpy_file,roi_dat,stream_idxs):
-    aff_eye = np.eye(4)
-    D = Dpy(dpy_file, 'r')
-    streams = D.read_tracksi(stream_idxs)
-    D.close()
-    streamsinroi = list(target_line_based(streams,roi_dat,aff_eye))
-    return streamsinroi
+  #def calc_streams_in_roi(dpy_file,roi_dat,stream_idxs):
+  #  aff_eye = np.eye(4)
+  #  D = Dpy(dpy_file, 'r')
+  #  streams = D.read_tracksi(stream_idxs)
+  #  D.close()
+  #  streamsinroi = list(target_line_based(streams,roi_dat,aff_eye))
+  #  return streamsinroi
 
   
   sir = Parallel(n_jobs=n_jobs,temp_folder=jl_cache_dir)\
                 (delayed(calc_streams_in_roi)\
-                (dpy_file,roi_dat,sfms.ix[idx]['stream_idxs']) for idx in idxsinbbox)
+                (dpy_file,roi_dat,sfms.ix[idx]['idxlist']) for idx in idxsinbbox)
 
   idxsused = idxsinbbox
 
   len_sir = [len(s) for s in sir]
 
   df = pd.DataFrame(len_sir, index=idxsused)
-  df.columns.names = ['len']
+  df.columns = ['num_streams_in_roi']
+
+  tot_streams = [sfms['idxlist'].ix[idx].shape[0] for idx in idxsused]
+
+  df['tot_streams'] = tot_streams
+  df['tot_streams_divnuminroi'] = df['tot_streams'] / df['num_streams_in_roi']
+  df['pc_streams_in_roi'] = 100./df['tot_streams'] * df['num_streams_in_roi']
   df.index.names = ['idx']
   
   return df
+
+
+def calc_streams_in_roi(dpy_file,roi_dat,stream_idxs):
+  aff_eye = np.eye(4)
+  D = Dpy(dpy_file, 'r')
+  streams = D.read_tracksi(stream_idxs)
+  D.close()
+  streamsinroi = list(target_line_based(streams,roi_dat,aff_eye))
+  return streamsinroi
 
 
 
