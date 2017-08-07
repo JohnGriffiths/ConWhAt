@@ -2,6 +2,5 @@
 Usage
 ========
 
-To use this template, simply update it::
+Usage notes coming here. 
 
-	import read-the-docs-template
