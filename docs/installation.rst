@@ -2,6 +2,17 @@
 Installation
 ============
 
-Install the package with pip::
+To install ConWhAt: 
 
-    $ pip install read-the-docs-template
+
+- Clone latest version from github
+
+  git clone https://github.com/JohnGriffiths/ConWhAt
+
+
+- Install manually
+
+ cd ConWhAt
+ python setup.py install
+
+
