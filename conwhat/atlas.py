@@ -14,7 +14,7 @@ from utils.readers import (load_connectivity,load_vol_file_mappings,load_vol_bbo
                            make_nx_graph)
 
 from utils.stats import (compute_vol_hit_stats,compute_vol_scalar_stats,
-                         compute_stream_hit_stats,compute_stream_scalar_stats,
+                         compute_streams_in_roi,#compute_stream_hit_stats,compute_stream_scalar_stats,
                          hit_stats_to_nx)
 
 #from viz.network import plot_network,plot_matrix
@@ -256,7 +256,7 @@ class _StreamAtlas(_Atlas):
     self.sfms,self.atlas_dir = load_stream_file_mappings(atlas_name=atlas_name)
     self.bbox = load_stream_bboxes(atlas_name=atlas_name)
 
-
+    self.dpy_file = '%s/atlas_streams.dpy' %(self.atlas_dir)
 
 
 class StreamTractAtlas(_StreamAtlas):
@@ -298,6 +298,26 @@ class StreamConnAtlas(_StreamAtlas):
 
     # Compile node and connectivity info into a networkx graph
     self.Gnx = make_nx_graph(self.sfms,self.bbox,ws,rls,hs,ctx)
+
+
+
+
+  def compute_hit_stats(self,roi,idxs,n_jobs=1,run_type='simple'):
+    """
+    Compute hit stats and store inside this object
+    under 'name'
+    """
+
+    df_hit_stats = compute_streams_in_roi(roi,self.dpy_file,self.sfms,self.bbox,
+                                          idxs,n_jobs=n_jobs,
+                                          atlas_name=self.atlas_name)
+
+    G_hit_stats = hit_stats_to_nx(df_hit_stats,self.Gnx,self.sfms)
+
+    return df_hit_stats,G_hit_stats
+
+
+
 
 
 
