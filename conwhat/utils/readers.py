@@ -26,7 +26,7 @@ def load_vol_file_mappings(atlas_name=None,atlas_dir=None):
 
   print  'loading file mapping'
 
-  if not atlas_dir: atlas_dir = os.path.join(abd,atlas_name)
+  if atlas_dir == None: atlas_dir = os.path.join(abd,atlas_name)
 
   mappings = pd.read_csv(atlas_dir + '/mappings.txt', sep=',')
 
@@ -37,7 +37,7 @@ def load_vol_bboxes(atlas_name=None,atlas_dir=None):
 
   print  'loading vol bbox'
 
-  if not atlas_dir: atlas_dir = os.path.join(abd,atlas_name)
+  if atlas_dir == None: atlas_dir = os.path.join(abd,atlas_name)
 
   bbox = pd.read_csv(atlas_dir + '/bounding_boxes.txt', sep=',')
 

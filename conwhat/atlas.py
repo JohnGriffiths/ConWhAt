@@ -41,14 +41,20 @@ class _VolAtlas(_Atlas):
   Volumetric atlas class
   """
 
-  def __init__(self,atlas_name):
+  def __init__(self,atlas_name=None,atlas_dir=None):
 
     self.atlas_name = atlas_name
 
     # Load volumetric atlas info
 
-    self.vfms,self.atlas_dir = load_vol_file_mappings(atlas_name=atlas_name) 
-    self.bbox = load_vol_bboxes(atlas_name=atlas_name)
+    #if atlas_dir:
+    #  self.vfms,self.atlas_dir = load_vol_file_mappings(atlas_dir=atlas_dir)
+    #  self.bbox = load_vol_bboxes(atlas_dir=atlas_dir)
+    #else: 
+    #  self.vfms,self.atlas_dir = load_vol_file_mappings(atlas_name=atlas_name) 
+    #  self.bbox = load_vol_bboxes(atlas_name=atlas_name)
+    self.vfms,self.atlas_dir = load_vol_file_mappings(atlas_name=atlas_name,atlas_dir=atlas_dir)
+    self.bbox = load_vol_bboxes(atlas_name=atlas_name,atlas_dir=atlas_dir)
 
 
 
@@ -109,9 +115,9 @@ class VolTractAtlas(_VolAtlas):
   Volumetric tract-based atlas base class
   """
 
-  def __init__(self,atlas_name):
+  def __init__(self,atlas_name=None,atlas_dir=None):
 
-    _VolAtlas.__init__(self, atlas_name)
+    _VolAtlas.__init__(self,atlas_name=atlas_name,atlas_dir=atlas_dir)
 
 
   def compute_hit_stats(self,roi,idxs,n_jobs=1,run_type='simple'):
@@ -140,13 +146,13 @@ class VolConnAtlas(_VolAtlas):
   Volumetric connectivity-based atlas
   """
 
-  def __init__(self,atlas_name): 
+  def __init__(self,atlas_dir=None,atlas_name=None):
 
-    _VolAtlas.__init__(self, atlas_name)
+    _VolAtlas.__init__(self,atlas_dir=atlas_dir,atlas_name=atlas_name)
 
     # Load connectivity info
 
-    ws,rls,tls,rxyzs,rnii,ctx,hs,rmfslh,rmfsrh = load_connectivity(atlas_name)
+    ws,rls,tls,rxyzs,rnii,ctx,hs,rmfslh,rmfsrh = load_connectivity(atlas_name=atlas_name,atlas_dir=atlas_dir)
     
     self.weights = ws
     self.region_labels = rls
@@ -247,14 +253,14 @@ class _StreamAtlas(_Atlas):
   Streamlinetric atlas base class
   """
     
-  def __init__(self,atlas_name):
+  def __init__(self,atlas_name=None,atlas_dir=None):
 
     self.atlas_name = atlas_name
 
     # Load streamlinetric atlas info
 
-    self.sfms,self.atlas_dir = load_stream_file_mappings(atlas_name=atlas_name)
-    self.bbox = load_stream_bboxes(atlas_name=atlas_name)
+    self.sfms,self.atlas_dir = load_stream_file_mappings(atlas_name=atlas_name,atlas_dir=atlas_dir)
+    self.bbox = load_stream_bboxes(atlas_name=atlas_name,atlas_dir=atlas_dir)
 
     self.dpy_file = '%s/atlas_streams.dpy' %(self.atlas_dir)
 
@@ -264,9 +270,9 @@ class StreamTractAtlas(_StreamAtlas):
   Streamlinetric tract-based atlas base class
   """
   
-  def __init__(self,atlas_name):
+  def __init__(self,atlas_name=None,atlas_dir=None):
 
-    _StreamAtlas.__init__(self, atlas_name)
+    _StreamAtlas.__init__(self,atlas_name=atlas_name,atlas_dir=atlas_dir)
 
 
 class StreamConnAtlas(_StreamAtlas):
@@ -274,15 +280,15 @@ class StreamConnAtlas(_StreamAtlas):
   Streamlinetric connectome-based atlas base class
   """
 
-  def __init__(self,atlas_name): 
+  def __init__(self,atlas_name=None,atlas_dir=None):
     # A lot of this is shared between StreamConn atlas and VolConn atlas. 
     # modify...
 
-    _StreamAtlas.__init__(self, atlas_name)
+    _StreamAtlas.__init__(self,atlas_name=atlas_name,atlas_dir=atlas_dir)
 
     # Load connectivity info
 
-    ws,rls,tls,rxyzs,rnii,ctx,hs,rmfslh,rmfsrh = load_connectivity(atlas_name)
+    ws,rls,tls,rxyzs,rnii,ctx,hs,rmfslh,rmfsrh = load_connectivity(atlas_name=atlas_name,atlas_dir=atlas_dir)
 
     self.weights = ws
     self.region_labels = rls
