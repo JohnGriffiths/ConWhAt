@@ -144,6 +144,27 @@ def load_stream_file_mappings(atlas_name=None,atlas_dir=None):
   return mappings,atlas_dir
 
 
+def load_stream_file_mappings_multifile(atlas_name=None,atlas_dir=None):
+
+  print  'loading mult-file streamline file mappings'
+
+  if not atlas_dir: atlas_dir = os.path.join(abd,atlas_name)
+
+  # Difference from above is that the keys are now (sub,cnxn), rather than cnxn
+  F = h5py.File(atlas_dir + '/mappings_multifile.h5', 'r')
+  KVs = {k: v.value for k,v in F.items()}
+  F.close()
+  mappings = pd.DataFrame(np.array(KVs.values()),
+                             index=KVs.keys())
+  mappings.columns = ['idxlist']
+  mappings.index.names = ['sub','name']
+  mappings = mappings.reset_index()
+
+  return mappings,atlas_dir
+
+
+
+
 
 # (this is identical to load vox bboxes. Remove both
 #  and replace with single func?)
