@@ -26,7 +26,7 @@ jl_cache_dir = '/tmp'
 abd = os.path.split(__file__)[0]  + '/../data'
 
 
-def compute_vol_hit_stats(roi_file,vfms,bboxes,idxs,readwith='indexgzip',n_jobs=1,atlas_name=None,run_type='sharedmem'):
+def compute_vol_hit_stats(roi_file,vfms,bboxes,idxs,readwith='indexgzip',n_jobs=1,atlas_dir=None,atlas_name=None,run_type='sharedmem'):
   """
   """
 
@@ -41,6 +41,9 @@ def compute_vol_hit_stats(roi_file,vfms,bboxes,idxs,readwith='indexgzip',n_jobs=
   bbox_isol,bbox_propol = compute_roi_bbox_overlaps(bboxes,roi_file) #est_file)
   bbox_isol_idx = np.nonzero(bbox_isol)[0]
   idxsinbbox = [idx for idx in idxs if idx in bbox_isol_idx]
+
+  if atlas_dir == None:
+    atlas_dir = '%s/%s' %(abd,atlas_name)
 
 
   # compute hit stats for roi on atlas volumes
@@ -64,10 +67,10 @@ def compute_vol_hit_stats(roi_file,vfms,bboxes,idxs,readwith='indexgzip',n_jobs=
      
     for fname in unique_fs_inbbox:
   
-      if atlas_name: 
-        fpath = '%s/%s/%s' %(abd,atlas_name,fname)
-      else: 
-        fpath = fname
+      #if atlas_dir: 
+      fpath = '%s/%s' %(atlas_dir,fname) #'%s/%s/%s' %(abd,atlas_name,fname)
+      #else: 
+      #  fpath = fname
 
       idxs_forthisf = vfms[vfms.nii_file == fname].index
     

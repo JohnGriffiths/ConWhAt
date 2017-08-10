@@ -90,7 +90,8 @@ class _VolAtlas(_Atlas):
 
     df_hit_stats = compute_vol_hit_stats(roi,self.vfms,self.bbox,
                                       idxs,n_jobs=n_jobs,
-                                      atlas_name=self.atlas_name)
+                                      atlas_name=self.atlas_name,
+                                      atlas_dir=self.atlas_dir)
 
     #G_hit_stats = hit_stats_to_nx(df_hit_stats,self.Gnx,self.vfms)
     #return df_hit_stats,G_hit_stats
@@ -128,7 +129,8 @@ class VolTractAtlas(_VolAtlas):
   
     df_hit_stats = compute_vol_hit_stats(roi,self.vfms,self.bbox,
                                       idxs,n_jobs=n_jobs,
-                                      atlas_name=self.atlas_name)
+                                      atlas_name=self.atlas_name,
+                                      atlas_dir = self.atlas_dir)
     return df_hit_stats
 
 
@@ -179,7 +181,8 @@ class VolConnAtlas(_VolAtlas):
 
     df_hit_stats = compute_vol_hit_stats(roi,self.vfms,self.bbox,
                                       idxs,n_jobs=n_jobs,
-                                      atlas_name=self.atlas_name)
+                                      atlas_name=self.atlas_name,
+                                      atlas_dir=self.atlas_dir)
 
     G_hit_stats = hit_stats_to_nx(df_hit_stats,self.Gnx,self.vfms)
 
