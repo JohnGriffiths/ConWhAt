@@ -106,7 +106,14 @@ def make_nx_graph(vfms,bboxes,weights,region_labels,hemis,cortex):
   # add edge info
   for idx in vfms.index:
     vfm = vfms.ix[idx]
-    roi1,roi2 = vfm['name'].split('_to_')
+    name = vfm['name']
+
+    # Allow either '33-55' or '33_to_55' naming conventions
+    if '_to_' in name:
+      roi1,roi2 = name.split('_to_')
+    else:
+      roi1,roi2 = name.split('-')
+
     roi1 = int(roi1); roi2 = int(roi2)
     ad = vfm.to_dict()
     ad.update(bboxes.ix[idx])
@@ -115,8 +122,15 @@ def make_nx_graph(vfms,bboxes,weights,region_labels,hemis,cortex):
     ad['weight'] = weights[roi1,roi2]
 
     n1,n2 = G.node[roi1],G.node[roi2]
-    fullname = n1['region_label'] + '_to_' + n2['region_label']
+
+    # (ibid...)
+    if '_to_' in name:
+      fullname = n1['region_label'] + '_to_' + n2['region_label']
+    else:
+      fullname = n1['region_label'] + '-' + n2['region_label']
+
     ad['fullname'] = fullname
+
 
     G.add_edge(roi1,roi2,attr_dict=ad)
     
@@ -207,7 +221,14 @@ def make_streams_nx_graph(sfms,bboxes,weights,region_labels,hemis,cortex):
   # add edge info
   for idx in sfms.index:
     sfm = sfms.ix[idx]
-    roi1,roi2 = sfm['name'].split('_to_')
+    name = sfm['name']
+
+    # Allow either '33-55' or '33_to_55' naming conventions
+    if '_to_' in name:
+      roi1,roi2 = name.split('_to_')
+    else: 
+      roi1,roi2 = name.split('-')
+
     roi1 = int(roi1); roi2 = int(roi2)
     ad = sfm.to_dict()
     ad.update(bboxes.ix[idx])
@@ -216,8 +237,15 @@ def make_streams_nx_graph(sfms,bboxes,weights,region_labels,hemis,cortex):
     ad['weight'] = weights[roi1,roi2]
 
     n1,n2 = G.node[roi1],G.node[roi2]
-    fullname = n1['region_label'] + '_to_' + n2['region_label']
+
+    # (ibid...)
+    if '_to_' in name: 
+      fullname = n1['region_label'] + '_to_' + n2['region_label']
+    else: 
+      fullname = n1['region_label'] + '-' + n2['region_label']
+
     ad['fullname'] = fullname
+
 
     G.add_edge(roi1,roi2,attr_dict=ad)
 
