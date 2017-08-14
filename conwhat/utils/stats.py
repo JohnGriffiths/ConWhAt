@@ -20,13 +20,11 @@ from joblib import Parallel,delayed
 from readers import igzip4dnii
 
 
-jl_cache_dir = '/tmp'
-
 
 abd = os.path.split(__file__)[0]  + '/../data'
 
 
-def compute_vol_hit_stats(roi_file,vfms,bboxes,idxs,readwith='indexgzip',n_jobs=1,atlas_dir=None,atlas_name=None,run_type='sharedmem'):
+def compute_vol_hit_stats(roi_file,vfms,bboxes,idxs,readwith='indexgzip',n_jobs=1,atlas_dir=None,atlas_name=None,run_type='sharedmem',joblib_cache_dir='/tmp'):
   """
   """
 
@@ -49,10 +47,10 @@ def compute_vol_hit_stats(roi_file,vfms,bboxes,idxs,readwith='indexgzip',n_jobs=
   # compute hit stats for roi on atlas volumes
   if run_type == 'simple': 
 
-    hstats = Parallel(n_jobs=n_jobs,temp_folder=jl_cache_dir)\
+    hstats = Parallel(n_jobs=n_jobs,temp_folder=joblib_cache_dir)\
             (delayed(hit_stats_for_vols)\
             (roi_dat,igzip4dnii(vfms.ix[idx]['nii_file'],
-            vfms.ix[idx]['4dvolind'],atlas_name=atlas_name))\
+            vfms.ix[idx]['4dvolind'],atlas_name=atlas_name,atlas_dir=atlas_dir))\
             for idx in idxsinbbox)
 
     idxsused = idxsinbbox
@@ -90,7 +88,7 @@ def compute_vol_hit_stats(roi_file,vfms,bboxes,idxs,readwith='indexgzip',n_jobs=
   
       vols = [np.squeeze(image.dataobj[:,:,:,int(v)]) for v in volinds]
     
-      res = Parallel(n_jobs=n_jobs,temp_folder=jl_cache_dir)\
+      res = Parallel(n_jobs=n_jobs,temp_folder=joblib_cache_dir)\
            (delayed(hit_stats_for_vols)\
            (roi_dat,vol) for vol in vols)
                
@@ -306,7 +304,7 @@ def get_intersection(bba,bbb):
 
 
 
-def compute_streams_in_roi(roi_file,dpy_file,sfms,bboxes,idxs,n_jobs=1,atlas_name=None):
+def compute_streams_in_roi(roi_file,dpy_file,sfms,bboxes,idxs,n_jobs=1,atlas_name=None,joblib_cache_dir='/tmp'):
 
   #,idxs,readwith='indexgzip',n_jobs=1,atlas_name=None,run_type='sharedmem'):
   """
@@ -335,7 +333,7 @@ def compute_streams_in_roi(roi_file,dpy_file,sfms,bboxes,idxs,n_jobs=1,atlas_nam
   #  return streamsinroi
 
   
-  sir = Parallel(n_jobs=n_jobs,temp_folder=jl_cache_dir)\
+  sir = Parallel(n_jobs=n_jobs,temp_folder=joblib_cache_dir)\
                 (delayed(calc_streams_in_roi)\
                 (dpy_file,roi_dat,sfms.ix[idx]['idxlist']) for idx in idxsinbbox)
 

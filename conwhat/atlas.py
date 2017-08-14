@@ -7,6 +7,9 @@ Atlas class definitions
 
 import os
 
+import numpy as np
+import nibabel as nib
+
 from nilearn.image import index_img
 
 from utils.readers import (load_connectivity,load_vol_file_mappings,load_vol_bboxes,
@@ -82,7 +85,7 @@ class _VolAtlas(_Atlas):
 
     
 
-  def compute_hit_stats(self,roi,idxs,n_jobs=1,run_type='simple'):
+  def compute_hit_stats(self,roi,idxs,n_jobs=1,run_type='simple',joblib_cache_dir='/tmp'):
     """
     Compute hit stats and store inside this object
     under 'name'
@@ -91,7 +94,9 @@ class _VolAtlas(_Atlas):
     df_hit_stats = compute_vol_hit_stats(roi,self.vfms,self.bbox,
                                       idxs,n_jobs=n_jobs,
                                       atlas_name=self.atlas_name,
-                                      atlas_dir=self.atlas_dir)
+                                      atlas_dir=self.atlas_dir,
+                                      run_type=run_type,
+                                      joblib_cache_dir=joblib_cache_dir)
 
     #G_hit_stats = hit_stats_to_nx(df_hit_stats,self.Gnx,self.vfms)
     #return df_hit_stats,G_hit_stats
@@ -121,7 +126,7 @@ class VolTractAtlas(_VolAtlas):
     _VolAtlas.__init__(self,atlas_name=atlas_name,atlas_dir=atlas_dir)
 
 
-  def compute_hit_stats(self,roi,idxs,n_jobs=1,run_type='simple'):
+  def compute_hit_stats(self,roi,idxs,n_jobs=1,run_type='simple',joblib_cache_dir='/tmp'):
     """
     Compute hit stats and store inside this object
       under 'name'
@@ -130,7 +135,8 @@ class VolTractAtlas(_VolAtlas):
     df_hit_stats = compute_vol_hit_stats(roi,self.vfms,self.bbox,
                                       idxs,n_jobs=n_jobs,
                                       atlas_name=self.atlas_name,
-                                      atlas_dir = self.atlas_dir)
+                                      atlas_dir = self.atlas_dir,
+                                      run_type=run_type,joblib_cache_dir=joblib_cache_dir)
     return df_hit_stats
 
 
@@ -173,7 +179,7 @@ class VolConnAtlas(_VolAtlas):
 
 
 
-  def compute_hit_stats(self,roi,idxs,n_jobs=1,run_type='simple'):
+  def compute_hit_stats(self,roi,idxs,n_jobs=1,run_type='simple',joblib_cache_dir='/tmp'):
     """
     Compute hit stats and store inside this object
       under 'name'
@@ -182,7 +188,9 @@ class VolConnAtlas(_VolAtlas):
     df_hit_stats = compute_vol_hit_stats(roi,self.vfms,self.bbox,
                                       idxs,n_jobs=n_jobs,
                                       atlas_name=self.atlas_name,
-                                      atlas_dir=self.atlas_dir)
+                                      atlas_dir=self.atlas_dir,
+                                      run_type=run_type,
+                                      joblib_cache_dir=joblib_cache_dir)
 
     G_hit_stats = hit_stats_to_nx(df_hit_stats,self.Gnx,self.vfms)
 
@@ -209,7 +217,11 @@ class VolConnAtlas(_VolAtlas):
       else: 
         Exception('file not found')
     
-    if os.path.isfile(nii_file): img = index_img(nii_file,volnum)
+    if os.path.isfile(nii_file):
+      if (np.isnan(volnum) or volnum == 'nan'):
+        img = nib.load(nii_file)
+      else:
+        img = index_img(nii_file,volnum)
    
     return img
 
@@ -311,7 +323,7 @@ class StreamConnAtlas(_StreamAtlas):
 
 
 
-  def compute_hit_stats(self,roi,idxs,n_jobs=1,run_type='simple'):
+  def compute_hit_stats(self,roi,idxs,n_jobs=1,run_type='simple',joblib_cache_dir='/tmp'):
     """
     Compute hit stats and store inside this object
     under 'name'
@@ -319,7 +331,8 @@ class StreamConnAtlas(_StreamAtlas):
 
     df_hit_stats = compute_streams_in_roi(roi,self.dpy_file,self.sfms,self.bbox,
                                           idxs,n_jobs=n_jobs,
-                                          atlas_name=self.atlas_name)
+                                          atlas_name=self.atlas_name,
+                                          joblib_cache_dir=joblib_cache_dir)
 
     G_hit_stats = hit_stats_to_nx(df_hit_stats,self.Gnx,self.sfms)
 
