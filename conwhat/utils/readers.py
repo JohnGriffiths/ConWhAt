@@ -255,11 +255,17 @@ def make_streams_nx_graph(sfms,bboxes,weights,region_labels,hemis,cortex):
 
 def igzip4dnii(fname,inds3d,
                inds0d='all',inds1d='all',inds2d='all',
-               atlas_name=None):
+               atlas_name=None,
+               atlas_dir=None):
 
-  # If atlas name is given, assumes path is relative 
-  # to local conwhat atlas dir
-  if atlas_name: fname = '%s/%s/%s' %(abd,atlas_name,fname)
+  # If atlas dir given, file is assumed to be in there
+  if atlas_dir:
+    fname = '%s/%s' %(atlas_dir,fname)
+  else:
+    # If atlas dir not given but atlas name is given, assumes path is relative 
+    # to local conwhat atlas dir
+    if atlas_name: 
+      fname = '%s/%s/%s' %(abd,atlas_name,fname)
 
   # Here we are usin 4MB spacing between
   # seek points, and using a larger read
@@ -277,7 +283,7 @@ def igzip4dnii(fname,inds3d,
     
   
 
-  if inds3d == 'N/A':
+  if inds3d == 'N/A' or np.isnan(inds3d):
     dims0,dims1,dims2 = image.shape
     dat = np.squeeze(image.dataobj[:,:,:])
 
