@@ -66,21 +66,24 @@ class _VolAtlas(_Atlas):
     Convenience method to return nifti volume for an entry in the vfm table
     """
 
-    fname = self.vfms.ix[idx]['nii_file']
-    vol = self.vfms.ix[idx]['4dvolind']
+    nii_file = self.vfms.ix[idx]['nii_file']
+    volnum = self.vfms.ix[idx]['4dvolind']
     
-    if not os.path.isfile(fname):  
-      
-      candidate = os.path.join(self.atlas_dir,fname)
+    if not os.path.isfile(nii_file):  
+      candidate = os.path.join(self.atlas_dir,nii_file)
       if os.path.isfile(candidate): 
-        fname = candidate
+        nii_file = candidate
       else: 
           Exception('File not found')
     
-    if os.path.isfile(fname):
-      print 'getting atlas entry %s: volume %s from image file %s'  %(idx,vol,fname)
-    img = index_img(fname,vol)
-    
+    if os.path.isfile(nii_file):
+      if (np.isnan(volnum) or volnum == 'nan'):
+        print 'getting atlas entry %s: image file %s'  %(idx,nii_file)
+        img = nib.load(nii_file)
+      else:
+        print 'getting atlas entry %s: volume %s from image file %s'  %(idx,volnum,nii_file)
+        img = index_img(nii_file,volnum)
+ 
     return img
 
     
