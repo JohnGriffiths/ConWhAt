@@ -132,6 +132,12 @@ def hit_stats_calc(TP,TN,FP,FN):
 
   # Source: https://en.wikipedia.org/wiki/Confusion_matrix
 
+  # Make sure divisions are by floats (classic python gotcha)
+  TP = float(TP)
+  TN = float(TN)
+  FP = float(FP)
+  FN = float(FN) 
+
   # Condition positive
   P = TP + FN
     
@@ -174,9 +180,21 @@ def hit_stats_calc(TP,TN,FP,FN):
   # Markedness (MK)
   MK = PPV + NPV - 1
 
+
+  # Cohen's kappa (c.f. Wakana et al. 2007; Wasserman et al. 2015)
+  Nall  = TN + FP + FN + TN
+  Enn   = (TN+FP)*(TN+FN) / Nall
+  Enp   = (TN+FP)*(FP+TP) / Nall
+  Epn   = Enp
+  Epp   = (FN+TP)*(FP+TP) / Nall
+  OA    = (TN + TP)   / Nall * 100.
+  EA    = (Enn + Epp) / Nall  *100.
+  Kappa = (OA-EA) / (100. - EA)
+    
+
   RD = {'TPR': TPR, 'TNR': TNR,'PPV': PPV, 'NPV': NPV, 'FPR': FPR, 'FDR': FDR, 
         'FNR': FNR, 'ACC': ACC, 'F1': F1, 'MCC': MCC, 'BM': BM, 'MK': MK,
-        'TP': TP, 'TN': TN, 'FP': FP, 'FN': FN}
+        'TP': TP, 'TN': TN, 'FP': FP, 'FN': FN,'Kappa': Kappa}
   
   return RD
 
