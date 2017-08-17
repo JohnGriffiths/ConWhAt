@@ -138,6 +138,9 @@ def hit_stats_calc(TP,TN,FP,FN):
   FP = float(FP)
   FN = float(FN) 
 
+  if TP == 0 and FN == 0:
+    raise ValueError('TP = 0 and FN = 0; Test image is all zeros')
+
   # Condition positive
   P = TP + FN
     
