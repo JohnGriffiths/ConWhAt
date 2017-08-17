@@ -57,7 +57,7 @@ def compute_vol_hit_stats(roi_file,vfms,bboxes,idxs,readwith='indexgzip',n_jobs=
 
   elif run_type == 'sharedmem':
 
-    # Loop through each file, load in to memoeyr, and spawn parallel jobs
+    # Loop through each file, load in to memory, and spawn parallel jobs
 
     hstats,idxsused = [],[]
 
