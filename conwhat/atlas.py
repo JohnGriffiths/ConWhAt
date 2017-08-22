@@ -227,15 +227,32 @@ class VolConnAtlas(_VolAtlas):
     return df_hit_stats,G_hit_stats
 
 
+  def get_rois_from_idx(self,idx):
+    """
+    Note: assumes that 'name' column in vfms is 
+          of the form 'roi1_to_roi2'
+    """
+    roi1,roi2 = self.vfms.ix[idx]['name'].split('_to_')
+    roi1 = int(roi1)
+    roi2 = int(roi2)
 
+    return roi1,roi2 
 
+ 
 
+  def get_idx_from_rois(self,roi1,roi2):
+    g = self.Gnx[int(roi1)][int(roi2)]
+    idx = g['idx']
+    return idx
+ 
 
   def get_vol_from_rois(self,roi1,roi2):
 
-    g = self.Gnx[int(roi1)][int(roi2)]
-    idx = g['idx']
-    
+    idx = self.get_idx_from_rois(roi1,roi2)
+   
+    img = self.get_vol_from_vfm(idx)
+
+    """
     vfm = self.vfms.ix[idx]
     nii_file = vfm['nii_file']
     volnum = vfm['4dvolind']
@@ -253,6 +270,9 @@ class VolConnAtlas(_VolAtlas):
       else:
         img = index_img(nii_file,volnum)
    
+    return img
+    """
+
     return img
 
 
@@ -278,21 +298,34 @@ class VolConnAtlas(_VolAtlas):
     plot_matrix()
 
 
-  def nl_plot_cnxn_and_rois(self,roi1=None,roi2=None,idx=None):
 
-    if roi1 and roi2:
-      img = self.get_vol_from_rois(roi1,roi2)
-    elif idx: 
-      img = self.get_vol_from_idx(idx)
-     
-
+  def get_single_roi_img(self,roinum):
+    """
+    Return nifti image with just this roi
+    """
     
+    roinum = int(roinum) 
+
+    allrois_img = self.region_nii
+    allrois_dat = allrois_img.get_data()
+
+    thisroi_dat = (allrois_dat==roinum).astype('float32')
+    thisroi_img = nib.Nifti1Image(thisroi_dat,allrois_img.affine)
+
+    return thisroi_img
+
+
 
   def nl_plot_connvol(self,idx=None,roi1=None,roi2=None,add_rois=True,
                       nl_params = dict(threshold=0.1,cmap='Reds')):
 
-    vfms = self.vfms
-
+    if idx: 
+      cnxn_img = self.get_vol_from_vfm(idx)
+      roi1,roi2 = self.get_rois_from_idx(idx)
+    else:   
+      cnxn_img = self.get_vol_from_rois(roi1,roi2)
+ 
+    """
     if (roi1 != None) and (roi2 != None):
 
       roi1 = int(roi1)
@@ -319,48 +352,17 @@ class VolConnAtlas(_VolAtlas):
 
       roi1 = int(vfms.ix[idx]['name'].split('_to_')[0])
       roi2 = int(vfms.ix[idx]['name'].split('_to_')[1])
-
-
-    vfm = vfms.ix[idx]
-
-    cnxn_img = self.get_vol_from_rois(roi1,rioi2)
-
-    #cnxn_file = self.atlas_dir + '/' + vfm['nii_file']
-    #cnxn_img = nib.load(cnxn_file)
+    """
 
     display = plot_glass_brain(cnxn_img,**nl_params)
 
-
     if add_rois:
 
-      roi_img = self.region_nii
-      roi_dat = roi_img.get_data()
+      roi1_img = self.get_single_roi_img(roi1)
+      roi2_img = self.get_single_roi_img(roi2)
 
-      roi1_dat = (roi_dat==roi1).astype('float32')
-      roi1_img = nib.Nifti1Image(roi1_dat,roi_img.affine)
-
-      roi2_dat = (roi_dat==roi2).astype('float32')
-      roi2_img = nib.Nifti1Image(roi2_dat,roi_img.affine)
-
-      roi12_dat = roi1_dat+roi2_dat
-      roi12_img = nib.Nifti1Image(roi12_dat,roi_img.affine)
-
-      roi1_bin_dat = (roi1_dat>0).astype('float32')
-      roi1_bin_img = nib.Nifti1Image(roi1_bin_dat,roi_img.affine)
-
-      roi2_bin_dat = (roi2_dat>0).astype('float32')
-      roi2_bin_img = nib.Nifti1Image(roi2_bin_dat,roi_img.affine)
-
-      roi12_bin_dat = (roi12_dat>0).astype('float32')
-      roi12_bin_img = nib.Nifti1Image(roi12_bin_dat,roi_img.affine)
-
-      #  outfile = '%s/vismap_grp_%s_glassbrain.png' %(im_dir,cnxn)
       display.add_contours(roi1_img, colors='Blue', linewidths=0.5, alpha=0.9)
       display.add_contours(roi2_img, colors='Green', linewidths=0.5, alpha=0.9)
-      #  plt.savefig(outfile, bbox_inches='tight',dpi=600)
-      #  plt.close() 
-      #  display.close()
-      #   '3570.acdfhilntuw6[]
 
     return display
 
