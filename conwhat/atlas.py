@@ -16,7 +16,7 @@ from nilearn.plotting import plot_glass_brain
 
 from utils.readers import (load_connectivity,load_vol_file_mappings,load_vol_bboxes,
                            load_stream_file_mappings,load_stream_bboxes,
-                           make_nx_graph)
+                           make_nx_graph,dpy_to_trk)
 
 from utils.stats import (compute_vol_hit_stats,compute_vol_scalar_stats,
                          compute_streams_in_roi,#compute_stream_hit_stats,compute_stream_scalar_stats,
@@ -390,6 +390,14 @@ class _StreamAtlas(_Atlas):
     self.dpy_file = '%s/atlas_streams.dpy' %(self.atlas_dir)
 
 
+  def write_subset_to_trk(self,ref_file,outfile,stream_inds='all'):
+
+    print 'writing streams to trk file: %s' %outfile
+    dpy_to_trk(self.dpy_file,ref_file,outfile,inds=stream_inds)
+
+
+
+
 class StreamTractAtlas(_StreamAtlas):
   """
   Streamlinetric tract-based atlas base class
@@ -432,6 +440,24 @@ class StreamConnAtlas(_StreamAtlas):
 
 
 
+  def get_rois_from_idx(self,idx):
+    """
+    Note: assumes that 'name' column in vfms is 
+          of the form 'roi1_to_roi2'
+    """
+    roi1,roi2 = self.sfms.ix[idx]['name'].split('_to_')
+    roi1 = int(roi1)
+    roi2 = int(roi2)
+
+    return roi1,roi2
+
+
+  def get_idx_from_rois(self,roi1,roi2):
+    g = self.Gnx[int(roi1)][int(roi2)]
+    idx = g['idx']
+    return idx
+
+
 
   def compute_hit_stats(self,roi,idxs,n_jobs=1,run_type='simple',joblib_cache_dir='/tmp'):
     """
@@ -464,6 +490,17 @@ class StreamConnAtlas(_StreamAtlas):
 
     self.modcons[name] = res
    
+
+
+  def write_cnxn_to_trk(self,ref_file,outfile,idx=None,roi1=None,roi2=None):
+
+    if not idx: 
+      idx = self.get_idx_from_rois(roi1,roi2)
+       
+    idxlist = self.sfms.ix[idx]['idxlist']
+
+    self.write_subset_to_trk(ref_file,outfile,stream_inds=idxlist)
+
 
 
   def plot_network(self):
