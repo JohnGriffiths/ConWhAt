@@ -122,80 +122,6 @@ class _VolAtlas(_Atlas):
 
 
 
-  def nl_plot_connvol(self,idx=None,roi1=None,roi2=None,add_rois=True,
-                      nl_params = dict(threshold=0.1,cmap='Reds')):
-
-    vfms = self.vfms
-
-    if (roi1 != None) and (roi2 != None):
-     
-      roi1 = int(roi1)
-      roi2 = int(roi2)
- 
-      str1 = '%s_to_%s' %(roi1,roi2)
-      search1 = np.nonzero(vfms['name'] == str1)[0]
-
-      str2 = '%s_to_%s' %(roi2,roi1)
-      search2 = np.nonzero(vfms['name'] == str2)[0]
-
-      if len(search1) > 0: 
-        idx = search1[0]
-        cnxn_name = str1
-      elif len(search2) > 0: 
-        idx = search2[0]
-        cnxn_name = str2
-      else: 
-        raise ValueError('connection not found')
-    
-    else:
-
-      cnxn_name = vfms.ix[idx]['name']
-
-      roi1 = int(vfms.ix[idx]['name'].split('_to_')[0])
-      roi2 = int(vfms.ix[idx]['name'].split('_to_')[1])
- 
- 
-    vfm = vfms.ix[idx]
-
-    cnxn_file = self.atlas_dir + '/' + vfm['nii_file']
-
-    cnxn_img = nib.load(cnxn_file)
-
-    display = plot_glass_brain(cnxn_img,**nl_params) 
-
-
-    if add_rois:
-
-      roi_img = self.region_nii
-      roi_dat = roi_img.get_data()
-
-      roi1_dat = (roi_dat==roi1).astype('float32')
-      roi1_img = nib.Nifti1Image(roi1_dat,roi_img.affine)
-
-      roi2_dat = (roi_dat==roi2).astype('float32')
-      roi2_img = nib.Nifti1Image(roi2_dat,roi_img.affine)
-
-      roi12_dat = roi1_dat+roi2_dat
-      roi12_img = nib.Nifti1Image(roi12_dat,roi_img.affine)
-
-      roi1_bin_dat = (roi1_dat>0).astype('float32')
-      roi1_bin_img = nib.Nifti1Image(roi1_bin_dat,roi_img.affine)
-
-      roi2_bin_dat = (roi2_dat>0).astype('float32')
-      roi2_bin_img = nib.Nifti1Image(roi2_bin_dat,roi_img.affine)
-
-      roi12_bin_dat = (roi12_dat>0).astype('float32')
-      roi12_bin_img = nib.Nifti1Image(roi12_bin_dat,roi_img.affine)    
-    
-      #  outfile = '%s/vismap_grp_%s_glassbrain.png' %(im_dir,cnxn)
-      display.add_contours(roi1_img, colors='Blue', linewidths=0.5, alpha=0.9)
-      display.add_contours(roi2_img, colors='Green', linewidths=0.5, alpha=0.9)
-      #  plt.savefig(outfile, bbox_inches='tight',dpi=600)
-      #  plt.close() 
-      #  display.close()
-      #   '3570.acdfhilntuw6[]
-    
-    return display
 
 
 class VolTractAtlas(_VolAtlas):
@@ -339,6 +265,85 @@ class VolConnAtlas(_VolAtlas):
      
 
     
+
+  def nl_plot_connvol(self,idx=None,roi1=None,roi2=None,add_rois=True,
+                      nl_params = dict(threshold=0.1,cmap='Reds')):
+
+    vfms = self.vfms
+
+    if (roi1 != None) and (roi2 != None):
+
+      roi1 = int(roi1)
+      roi2 = int(roi2)
+
+      str1 = '%s_to_%s' %(roi1,roi2)
+      search1 = np.nonzero(vfms['name'] == str1)[0]
+
+      str2 = '%s_to_%s' %(roi2,roi1)
+      search2 = np.nonzero(vfms['name'] == str2)[0]
+
+      if len(search1) > 0:
+        idx = search1[0]
+        cnxn_name = str1
+      elif len(search2) > 0:
+        idx = search2[0]
+        cnxn_name = str2
+      else:
+        raise ValueError('connection not found')
+
+    else:
+
+      cnxn_name = vfms.ix[idx]['name']
+
+      roi1 = int(vfms.ix[idx]['name'].split('_to_')[0])
+      roi2 = int(vfms.ix[idx]['name'].split('_to_')[1])
+
+
+    vfm = vfms.ix[idx]
+
+    cnxn_img = self.get_vol_from_rois(roi1,rioi2)
+
+    #cnxn_file = self.atlas_dir + '/' + vfm['nii_file']
+    #cnxn_img = nib.load(cnxn_file)
+
+    display = plot_glass_brain(cnxn_img,**nl_params)
+
+
+    if add_rois:
+
+      roi_img = self.region_nii
+      roi_dat = roi_img.get_data()
+
+      roi1_dat = (roi_dat==roi1).astype('float32')
+      roi1_img = nib.Nifti1Image(roi1_dat,roi_img.affine)
+
+      roi2_dat = (roi_dat==roi2).astype('float32')
+      roi2_img = nib.Nifti1Image(roi2_dat,roi_img.affine)
+
+      roi12_dat = roi1_dat+roi2_dat
+      roi12_img = nib.Nifti1Image(roi12_dat,roi_img.affine)
+
+      roi1_bin_dat = (roi1_dat>0).astype('float32')
+      roi1_bin_img = nib.Nifti1Image(roi1_bin_dat,roi_img.affine)
+
+      roi2_bin_dat = (roi2_dat>0).astype('float32')
+      roi2_bin_img = nib.Nifti1Image(roi2_bin_dat,roi_img.affine)
+
+      roi12_bin_dat = (roi12_dat>0).astype('float32')
+      roi12_bin_img = nib.Nifti1Image(roi12_bin_dat,roi_img.affine)
+
+      #  outfile = '%s/vismap_grp_%s_glassbrain.png' %(im_dir,cnxn)
+      display.add_contours(roi1_img, colors='Blue', linewidths=0.5, alpha=0.9)
+      display.add_contours(roi2_img, colors='Green', linewidths=0.5, alpha=0.9)
+      #  plt.savefig(outfile, bbox_inches='tight',dpi=600)
+      #  plt.close() 
+      #  display.close()
+      #   '3570.acdfhilntuw6[]
+
+    return display
+
+
+
 
 
 
