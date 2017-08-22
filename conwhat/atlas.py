@@ -88,7 +88,7 @@ class _VolAtlas(_Atlas):
  
     return img
 
-    
+   
 
   def compute_hit_stats(self,roi,idxs,n_jobs=1,run_type='simple',joblib_cache_dir='/tmp'):
     """
@@ -119,6 +119,24 @@ class _VolAtlas(_Atlas):
 
     self.scalar_stats[name] = res
 
+
+
+
+  def get_bbox_dimsizes(self):
+    """
+    Return lists of lengths between bounding box minima 
+    and maxima
+
+    Usage: 
+
+    xdimsize,ydimsize,zdimsize = cw.get_bbox_dimsizes()
+    """
+
+    xdimsize = np.abs(self.bbox['xmax'] - self.bbox['xmin'])
+    ydimsize = np.abs(self.bbox['ymax'] - self.bbox['ymin'])
+    zdimsize = np.abs(self.bbox['zmax'] - self.bbox['zmin'])
+
+    return xdimsize,ydimsize,zdimsize
 
 
 
