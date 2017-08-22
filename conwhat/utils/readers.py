@@ -310,7 +310,7 @@ def igzip4dnii(fname,inds3d,
   return dat
 
 
-def dpy_to_trk(dpy_file,inds,ref,outfile):
+def dpy_to_trk(dpy_file,ref,outfile,inds='all'):
   
     if os.path.isfile(ref):
         ref_img = nib.load(ref)
@@ -327,7 +327,10 @@ def dpy_to_trk(dpy_file,inds,ref,outfile):
 
     # Load streamlines
     D = Dpy(dpy_file, 'r')
-    dpy_streams = D.read_tracksi(inds)
+    if inds == 'all':
+      dpy_streams = D.read_tracks()
+    else:
+      dpy_streams = D.read_tracksi(inds)
     D.close()
     
     # Convert to trackvis space + format
