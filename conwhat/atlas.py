@@ -136,6 +136,10 @@ class _VolAtlas(_Atlas):
     ydimsize = np.abs(self.bbox['ymax'] - self.bbox['ymin'])
     zdimsize = np.abs(self.bbox['zmax'] - self.bbox['zmin'])
 
+    xdimsize = xdimsize.sort_values(ascending=False)
+    ydimsize = ydimsize.sort_values(ascending=False)
+    zdimsize = zdimsize.sort_values(ascending=False)
+
     return xdimsize,ydimsize,zdimsize
 
 
