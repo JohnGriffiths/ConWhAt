@@ -192,7 +192,7 @@ class VolConnAtlas(_VolAtlas):
 
     ws,rls,tls,rxyzs,rnii,ctx,hs,rmfslh,rmfsrh = load_connectivity(atlas_name=atlas_name,atlas_dir=atlas_dir)
     
-    self.weights = ws
+    self.__weights = ws
     self.region_labels = rls
 
     if tls is not None: self.tract_lengths = tls
@@ -206,6 +206,12 @@ class VolConnAtlas(_VolAtlas):
  
     # Compile node and connectivity info into a networkx graph
     self.Gnx = make_nx_graph(self.vfms,self.bbox,ws,rls,hs,ctx)
+
+
+  @property
+  def weights(self):
+    """Connectivity weights matrix"""
+    return self.__weights
 
 
 
@@ -423,7 +429,7 @@ class StreamConnAtlas(_StreamAtlas):
 
     ws,rls,tls,rxyzs,rnii,ctx,hs,rmfslh,rmfsrh = load_connectivity(atlas_name=atlas_name,atlas_dir=atlas_dir)
 
-    self.weights = ws
+    self.__weights = ws
     self.region_labels = rls
 
     if tls is not None: self.tract_lengths = tls
