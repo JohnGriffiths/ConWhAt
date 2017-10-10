@@ -1,0 +1,75 @@
+
+(Q: is the 'doc' folder going to be necessary??)
+(A: I think probbaly yes; but it can be quite sparse, and consit of links to notebooks for a lot of stuff)
+
+
+
+Plan for Examples Notebooks:
+
+
+00 - Intro to ConWhAt
+
+   - example with one atlas; talk about core methods , functions, etc.
+     maybe lesion overlap analyses for some selected tracts or something; quick
+
+
+01 - ConWhAt atlases
+
+   - run through of all atlases available in conwhat
+   -   (brief) descriptions of how they were made and where they came from
+   - plots of networks + parcellations
+
+02 - Lesion a network
+   
+   - use one or a few hand-drawn stroke type lesions
+   - volumetric and streamlinetric
+   - different modification functions (that could be another nb)
+
+
+03 - Connectivity-based analysis of JHU atlas
+   - use overlap to find connectome tracts etc
+   - (this will be in the paper)
+
+
+04 - Roll your own
+
+     - discussion of the nipype pipeline(s) for building atlases
+
+
+
+05 - Use with TVB
+
+
+     - modify a connectome and show a difference in a quick tvb sim
+
+
+
+Other stuff:
+
+
+- registration, normalization, reslicing etc; going from a lesioned T1 image into the right space
+- coordinate querying
+- pure function usage; no classes
+- don't get carried away!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
