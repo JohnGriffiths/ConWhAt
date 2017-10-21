@@ -1,3 +1,0 @@
-[submodule "conwhat/data"]
-	path = conwhat/data
-	url = git@github.com:JohnGriffiths/cw-data
