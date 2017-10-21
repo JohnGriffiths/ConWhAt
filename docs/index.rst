@@ -6,15 +6,6 @@
 Welcome to ConWhAt's documentation!
 ==================================================
 
-Contents:
-
-.. toctree::
-   :maxdepth: 2
-   :glob:
-
-   *
-
-
 .. toctree::
       :maxdepth: 2
    :caption: User Documentation
@@ -24,6 +15,12 @@ Contents:
    atlas_construction_workflow
    installation
    getting_started
+
+
+.. toctree::
+      :maxdepth: 2
+   :caption: Developer Documentation
+
    use_with_docker
 
 
