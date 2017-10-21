@@ -21,6 +21,7 @@ Welcome to ConWhAt's documentation!
       :maxdepth: 2
    :caption: Developer Documentation
 
+   contributing
    use_with_docker
 
 
