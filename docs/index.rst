@@ -15,6 +15,17 @@ Contents:
    *
 
 
+.. toctree::
+      :maxdepth: 2
+   :caption: User Documentation
+
+   overview
+   ontology_and_representation
+   atlas_construction_methodology
+   installation
+   getting_started
+   docker_usage
+
 
 Indices and tables
 ==================
