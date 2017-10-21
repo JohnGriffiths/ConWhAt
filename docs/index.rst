@@ -21,10 +21,10 @@ Contents:
 
    overview
    ontology_and_representation
-   atlas_construction_methodology
+   atlas_construction_workflow
    installation
    getting_started
-   docker_usage
+   use_with_docker
 
 
 Indices and tables
