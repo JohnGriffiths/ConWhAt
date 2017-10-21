@@ -12,7 +12,8 @@ Clone latest version from github
 
     $ git clone https://github.com/JohnGriffiths/ConWhAt
     
- Now go to the cloned folder and install manually 
+    
+Now go to the cloned folder and install manually 
 
  
 .. code::
