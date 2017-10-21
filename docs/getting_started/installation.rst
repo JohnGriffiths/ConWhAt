@@ -18,8 +18,8 @@ Now go to the cloned folder and install manually
  
 .. code::
 
-   $cd ConWhAt
-   $python setup.py install
+   $ cd ConWhAt
+   $ python setup.py install
 
 
 Alternatively, simply add the cloned path to you $pythonpath
