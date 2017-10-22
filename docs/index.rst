@@ -7,6 +7,13 @@ Welcome to ConWhAt's documentation!
 ==================================================
 
 
+ConWhAt is a tool for studying the effects of white matter damage on brain networks.
+
+Code is hosted on github: https://github.com/JohnGriffiths/ConWhAt/
+
+
+
+
 .. toctree::
    :maxdepth: 1
    :caption: About ConWhAt
