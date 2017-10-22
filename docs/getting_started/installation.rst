@@ -40,7 +40,7 @@ Using with docker
 
 - Build the docker container
 
-`docker build -it ConWhAt <path to ConWhaT folder>`
+`docker build -it ConWhAt <path to ConWhAt folder>`
 
 - Start Jupyter notebook server in the container
 
