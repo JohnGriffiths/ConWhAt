@@ -29,14 +29,20 @@ Welcome to ConWhAt's documentation!
 
 .. toctree:: 
    :maxdepth: 1
-   :caption: Analyses of Brain Lesionss
+   :caption: Analyses of Brain Lesions
   
    lesion_analyses/defining_a_lesion
    lesion_analyses/compute_overlap
 
 
 
-
+.. toctree:: 
+   :maxdepth: 1
+   :caption: Other Applications
+   
+   other_applications/connectivity_based_decomposition_of_white_matter_tracts
+   other_applications/setting_up_tvb_simulations_from_conwhat_outputs
+   
 
 
 
