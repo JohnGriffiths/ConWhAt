@@ -35,7 +35,9 @@ Using with docker
 
 *(coming soon)*
 
-- Install docker-engine [Instructions](https://docs.docker.com/engine/installation/)
+
+
+- Install docker-engine `(instructions here) <https://docs.docker.com/engine/installation/>`_
 
 - Build the docker container
 
