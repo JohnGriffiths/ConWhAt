@@ -42,7 +42,7 @@ Here is a list of the currently and soon-to-be available ConWhAt atlases:
 +------------------------+--------------------------------------+-------------+
 
 
-Downloading using the data fetcher functionsn
+Downloading using the data fetcher functions
 ---------------------------------------------
 
 *(coming soon...)*
