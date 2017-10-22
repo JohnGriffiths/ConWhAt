@@ -12,8 +12,8 @@ Welcome to ConWhAt's documentation!
    :caption: About ConWhAt
     
    about_conwhat/overview
-   about_conwhat/ontology_and_representationn
-   about_conwhat/atlas_construction_workfloww
+   about_conwhat/ontology_and_representation
+   about_conwhat/atlas_construction_workflow
 
 
 
@@ -32,7 +32,7 @@ Welcome to ConWhAt's documentation!
    :caption: Analyses of Brain Lesionss
   
    lesion_analyses/defining_a_lesion
-   lesion_analyses/compute_overlapp
+   lesion_analyses/compute_overlap
 
 
 
