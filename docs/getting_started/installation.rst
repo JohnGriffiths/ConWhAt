@@ -40,9 +40,13 @@ Using with docker
 
 - Build the docker container
 
-`docker build -it ConWhAt <path to ConWhAt folder>`
+.. code::
+
+   $ docker build -it ConWhAt <path to ConWhAt folder>`
 
 - Start Jupyter notebook server in the container
 
-`docker run -it -p 8888:8888 ConWhAt`
+.. code::
+
+   $ docker run -it -p 8888:8888 ConWhAt`
 
