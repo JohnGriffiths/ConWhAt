@@ -6,29 +6,38 @@
 Welcome to ConWhAt's documentation!
 ==================================================
 
-.. toctree::
-      :maxdepth: 2
-   :caption: User Documentation
-
-   overview
-   ontology_and_representation
-   atlas_construction_workflow
-   installation
-   getting_started
-
 
 .. toctree::
-      :maxdepth: 2
-   :caption: Developer Documentation
+   :maxdepth: 1
+   :caption: About ConWhAt
+    
+   about_conwhat/overview
+   about_conwhat/ontology_and_representationn
+   about_conwhat/atlas_construction_workfloww
 
-   contributing
-   use_with_docker
 
 
-Indices and tables
-==================
+.. toctree::
+   :maxdepth: 1
+   :caption: Getting Started 
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   getting_started/installation 
+   getting_started/downloading_atlases 
+   getting_started/exploring_the_atlases  
+   getting_started/exploring_the_canonical_connectomes
+  
+
+.. toctree:: 
+   :maxdepth: 1
+   :caption: Analyses of Brain Lesionss
+  
+   lesion_analyses/defining_a_lesion
+   lesion_analyses/compute_overlapp
+
+
+
+
+
+
+
 
