@@ -51,7 +51,7 @@ Downloading using the data fetcher functions
 Downloading manually from NITRC
 ================================
 
-All of the available atlases can be downloaded individually or altogether from the [ConWhAt NITRC page](https://www.nitrc.org/projects/conwhat/)
+All of the available atlases can be downloaded individually or altogether from the `ConWhAt NITRC page <https://www.nitrc.org/projects/conwhat/>`_.
 
 
 
