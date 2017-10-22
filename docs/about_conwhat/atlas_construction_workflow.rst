@@ -10,7 +10,7 @@ The connectivity-based atlases in ConWhAt are constructed based on [dipy](http:/
 
 
   .. image:: ../figs/atlas_construction_fig.png
-    :width: 200px
-    :align: right
+    :width: 600px
+    :align: center
 
 
