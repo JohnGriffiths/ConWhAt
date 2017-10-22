@@ -21,8 +21,7 @@ Now go to the cloned folder and install manually
    $ cd ConWhAt
    $ python setup.py install
 
-
-Alternatively, simply add the cloned path to you $pythonpath
+Alternatively, simply add the cloned path to your :code:`pythonpath`.
 
 
 Using pypi
