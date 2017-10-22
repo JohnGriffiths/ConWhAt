@@ -31,7 +31,18 @@ Using pypi
 *(coming soon)*
 
 
-Using docker
-~~~~~~~~~~~~
+Using with docker
+~~~~~~~~~~~~~~~~~
 
 *(coming soon)*
+
+- Install docker-engine [Instructions](https://docs.docker.com/engine/installation/)
+
+- Build the docker container
+
+`docker build -it ConWhAt <path to ConWhAT folder>`
+
+- Start Jupyter notebook server in the container
+
+`docker run -it -p 8888:8888 ConWhAt`
+
