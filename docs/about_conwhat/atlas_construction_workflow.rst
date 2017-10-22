@@ -8,6 +8,9 @@ The connectivity-based atlases in ConWhAt are constructed based on [dipy](http:/
 - Volumetric workfow: convert streamlines to track density images (visitation maps), spatially normalize, average  
 - Streamlinetric workflow: spatially normalize streamlines, concatenate, cluster
 
-<img src="figs/atlas_construction_fig.png" alt="Atlas Construction Process" style="width: 200px;"/>
+
+  .. image:: ../figs/atlas_construction_fig.png
+    :width: 200px
+    :align: right
 
 
