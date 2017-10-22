@@ -42,11 +42,11 @@ Using with docker
 
 .. code::
 
-   $ docker build -it ConWhAt <path to ConWhAt folder>`
+   $ docker build -it ConWhAt <path to ConWhAt folder>
 
 - Start Jupyter notebook server in the container
 
 .. code::
 
-   $ docker run -it -p 8888:8888 ConWhAt`
+   $ docker run -it -p 8888:8888 ConWhAt
 
