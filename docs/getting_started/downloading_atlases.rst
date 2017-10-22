@@ -1,6 +1,6 @@
-===================--
-Downloading atlasess
-=====================
+===================
+Downloading atlases
+===================
 
 In order to use ConWhAt you will need to download the atlases you want to use in your analyses. Be aware: some of these files are quite large. 
 
