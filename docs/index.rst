@@ -32,7 +32,7 @@ include major front and/or backend changes )
     
    about_conwhat/overview
    about_conwhat/ontology_and_representation
-   about_conwhat/atlas_construction_workflow
+   about_conwhat/conwhat_atlases
 
 
 
