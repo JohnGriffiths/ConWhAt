@@ -34,14 +34,9 @@ In particular, representations of white matter anatomical data in neuroimaging c
 
 For example: the basic units of volumetric representations are scalar-valued (voxel intensities), which when taken as a set can code for complex and rich encoding of 3D shapes in virtue of their arrangement on a regular 3D grid. In contrast, the basic units of streamlinetric representations are vector-valued; namely lists of coordinates in 3D space. Each individual streamline (unlike each individual voxel) therefore provides some holistic 3D shape information. The closest equivalent of voxel intensities for streamlines would be the presence of overlapping multiple streamlines; although this is much less compressed than scalar intensity values. 
  
-The definition and interpretation of 'damage' also turns out to be somewhat different for volumetric vs. streamlinetric representations. In the volumetric case, damage (defined as e.g. proportional overlap with a lesion) is evaluated independently for every voxel. In the streamlinetric case, damage is instead evaluated independently for every streamline, with the important corollary that evaluations at different spatial locations are not independent of each other. In short, if an upstream part of a streamline is considered to be damaged, then downstream parts are also considered to be damaged, even if they themselves are nowhere near the damaged area. Which is, of course, how one would expect real damage to axons to operate. 
+The definition and interpretation of 'damage' also turns out to be somewhat different for volumetric vs. streamlinetric representations. In the volumetric case, damage (defined as e.g. proportional overlap with a lesion) is evaluated independently for every voxel. In the streamlinetric case, damage is instead evaluated independently for every streamline, with the important corollary that evaluations at different spatial locations are not independent of each other. In short, if an upstream part of a streamline is considered to be damaged, then downstream parts are also considered to be damaged, even if they themselves are nowhere near the damaged area. Which is, of course, how one would expect real damage to axons to operate. Streamlinetric quantifications of damage are somewhat more difficult to work with than their volumetric equivalents, however. 
 
-
-
-
-
-
-
+There has been relatively little work done on direct comparisons of volumetric and streamlinetric characterizations of lesions, or indeed of white matter in general. ConWhAt is to our knowledge the first and only atlas-based tool that allows direct comparison between the two. 
 
 
 
