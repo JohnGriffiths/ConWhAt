@@ -1,6 +1,6 @@
-========
-Overview
-========
+=========================
+Ontology & Representation
+=========================
 
 
 Classical and modern schemas for defining and characterizing neuroanatomical structures in white matter tissue can be categorized along two main dimensions *Ontology* and *Representation*. Each of these has two main flavours: tract-based/connectivity-based, and image-based/streamline-based.
