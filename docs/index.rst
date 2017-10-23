@@ -6,10 +6,22 @@
 Welcome to ConWhAt's documentation!
 ==================================================
 
+ConWhAt is a tool for studying the effects of white matter damage on brain networks. 
 
-ConWhAt is a tool for studying the effects of white matter damage on brain networks.
+The code is hosted on github: https://github.com/JohnGriffiths/ConWhAt/
 
-Code is hosted on github: https://github.com/JohnGriffiths/ConWhAt/
+It is written in python and draws strongly on the powerful functionality provided by 
+other neuroimaging analysis tools in the nipy ecosystem for manipulation and 
+visualization of nifti images and tractography streamlines. 
+
+The primary intended mode of interaction is through jupyter notebooks and python / 
+bash scripting. Notebooks versions of some of the following documentation pages
+can be viewed at https://github.com/JohnGriffiths/ConWhAt/doc/examples
+
+( Please note: the software and atlases are still in beta, and future versions may 
+include major front and/or backend changes )
+
+
 
 
 
