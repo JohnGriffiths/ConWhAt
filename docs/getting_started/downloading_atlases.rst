@@ -2,7 +2,23 @@
 Downloading atlases
 ===================
 
-In order to use ConWhAt you will need to download the atlases you want to use in your analyses. Be aware: some of these files are quite large. 
+In order to use ConWhAt you will need to download the atlases you want to use in your analyses. 
+
+Be aware: some of these files are quite large!
+
+The atlas files are hosted on the `ConWhAt NITRC page <https://www.nitrc.org/projects/conwhat/>`_.
+
+There are currently three options for downloading the atlas data:
+
+
+1. Navigate to the NITRC page using the above link and download atlases manually
+2. Use the links in the table below
+3. Use the provided data fetcher utilities (see below)
+
+
+
+List of ConWhAt atlases
+-----------------------
 
 Here is a list of the currently and soon-to-be available ConWhAt atlases:
 
@@ -56,12 +72,15 @@ using the `fetcher` utilities:
                                        dataset_dir='/tmp',remove_existing=True)
 
 
-Downloading manually from NITRC
--------------------------------
-
-All of the available atlases can be downloaded individually or altogether from the `ConWhAt NITRC page <https://www.nitrc.org/projects/conwhat/>`_.
 
 
+Note on streamlinetric atlases
+---------------------------------------------
+
+Important note: the streamlinetric atlases all make use of a common streamlines file, which is quite large 
+and only needs to be downloaded once. Currently that file lives in the L2k8 scale 33 atlas folder. 
+You need to create symlinks to that file in all other streamlinetric atlas folders that use that 
+streamlines file. Downloading using the data fetcher (recommended) will set up these hyperlinks for you. 
 
 
 
