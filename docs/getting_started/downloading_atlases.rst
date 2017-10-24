@@ -45,11 +45,19 @@ Here is a list of the currently and soon-to-be available ConWhAt atlases:
 Downloading using the data fetcher functions
 ---------------------------------------------
 
-*(coming soon...)*
+Atlases can be downloaded directly from the NITRC repository
+using the `fetcher` utilities:
+
+.. code-block:: python
+
+    from conwhat.utils.fetchers import fetch_conwhat_atlas
+
+    res = fetchers.fetch_conwhat_atlas(atlas_name='CWL2k8Sc33Vol3d100s_v01',
+                                       dataset_dir='/tmp',remove_existing=True)
 
 
 Downloading manually from NITRC
-================================
+-------------------------------
 
 All of the available atlases can be downloaded individually or altogether from the `ConWhAt NITRC page <https://www.nitrc.org/projects/conwhat/>`_.
 
