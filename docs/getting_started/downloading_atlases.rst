@@ -10,10 +10,10 @@ Here is a list of the currently and soon-to-be available ConWhAt atlases:
 +------------------------+--------------------------------------+-------------+
 |         Name           |       Description                    | Available   |
 +========================+======================================+=============+
-| CWL2k8Sc33StrmS100     | Lausanne 2008 scale 33 parcellation  | *Now*       |
+| CWL2k8Sc33StrmS100     | Lausanne 2008 scale 33 parcellation  | *Now* `(link) <https://www.nitrc.org/frs/download.php/10381/CWL2k8Sc33Vol3d100s_v1.zip>`_ |
 |                        | streamlinetric, 100subjects          |             |
 +------------------------+--------------------------------------+-------------+
-| CWL2k8Sc60StrmS100     | Lausanne 2008 scale 60 parcellation  | *Now*       |
+| CWL2k8Sc60StrmS100     | Lausanne 2008 scale 60 parcellation  | *Now* `(link) <https://www.nitrc.org/frs/download.php/10381/CWL2k8Sc60Vol3d100s_v1.zip>`_ |
 |                        | streamlinetric, 100subjects          |             |
 +------------------------+--------------------------------------+-------------+
 | CWL2k8Sc125StrmS100    | Lausanne 2008 scale 125 parcellation | *Now*       |
