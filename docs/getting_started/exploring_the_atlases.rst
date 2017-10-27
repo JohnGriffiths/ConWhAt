@@ -11,21 +11,21 @@ types (Volumetric / Streamlinetric).
 
 .. code:: ipython2
 
-    # ConWhAt stuff
-    from conwhat import VolConnAtlas,StreamConnAtlas,VolTractAtlas,StreamTractAtlas
-    from conwhat.viz.volume import plot_vol_scatter
+    >>> # ConWhAt stuff
+    >>> from conwhat import VolConnAtlas,StreamConnAtlas,VolTractAtlas,StreamTractAtlas
+    >>> from conwhat.viz.volume import plot_vol_scatter
     
-    # Neuroimaging stuff
-    import nibabel as nib
-    from nilearn.plotting import plot_stat_map,plot_surf_roi
+    >>> # Neuroimaging stuff
+    >>> import nibabel as nib
+    >>> from nilearn.plotting import plot_stat_map,plot_surf_roi
     
-    # Viz stuff
-    %matplotlib inline
-    from matplotlib import pyplot as plt
-    import seaborn as sns
+    >>> # Viz stuff
+    >>> %matplotlib inline
+    >>> from matplotlib import pyplot as plt
+    >>> import seaborn as sns
     
-    # Generic stuff
-    import glob, numpy as np, pandas as pd, networkx as nx
+    >>> # Generic stuff
+    >>> import glob, numpy as np, pandas as pd, networkx as nx
 
 We'll start with the scale 33 lausanne 2008 volumetric
 connectivity-based atlas.
@@ -34,15 +34,15 @@ Define the atlas name and top-level directory location
 
 .. code:: ipython2
 
-    atlas_dir = '/scratch/hpc3230/Data/conwhat_atlases'
-    atlas_name = 'CWL2k8Sc33Vol3d100s_v01'
+    >>> atlas_dir = '/scratch/hpc3230/Data/conwhat_atlases'
+    >>> atlas_name = 'CWL2k8Sc33Vol3d100s_v01'
 
 Initialize the atlas class
 
 .. code:: ipython2
 
-    vca = VolConnAtlas(atlas_dir=atlas_dir + '/' + atlas_name,
-                       atlas_name=atlas_name)
+    >>> vca = VolConnAtlas(atlas_dir=atlas_dir + '/' + atlas_name,
+    >>>                      atlas_name=atlas_name)
 
 
 .. parsed-literal::
@@ -56,7 +56,7 @@ This atlas object contains various pieces of general information
 
 .. code:: ipython2
 
-    vca.atlas_name
+    >>> vca.atlas_name
 
 
 
@@ -69,7 +69,7 @@ This atlas object contains various pieces of general information
 
 .. code:: ipython2
 
-    vca.atlas_dir
+    >>> vca.atlas_dir
 
 
 
@@ -83,15 +83,6 @@ This atlas object contains various pieces of general information
 Information about each atlas entry is contained in the ``vfms``
 attribute, which returns a pandas dataframe
 
-.. code:: ipython2
-
-    vca.vfms.head()
-
-
-
-
-
-
 
 
 
@@ -101,7 +92,7 @@ connectome edge
 
 .. code:: ipython2
 
-    vca.Gnx.edges[(10,35)]
+    >>> vca.Gnx.edges[(10,35)]
 
 
 
@@ -128,7 +119,7 @@ Individual atlas entry nifti images can be grabbed like so
 
 .. code:: ipython2
 
-    img = vca.get_vol_from_vfm(1637)
+    >>> img = vca.get_vol_from_vfm(1637)
 
 
 .. parsed-literal::
@@ -138,17 +129,7 @@ Individual atlas entry nifti images can be grabbed like so
 
 .. code:: ipython2
 
-    plot_stat_map(img)
-
-
-
-
-.. parsed-literal::
-
-    <nilearn.plotting.displays.OrthoSlicer at 0x7fb19fada410>
-
-
-
+    >>> plot_stat_map(img)
 
 .. image:: ../figs/slice_view.png
 
@@ -158,10 +139,7 @@ Or alternatively as a 3D scatter plot, along with the x,y,z bounding box
 
 .. code:: ipython2
 
-    vca.bbox.ix[1637]
-
-
-
+    >>> vca.bbox.ix[1637]
 
 .. parsed-literal::
 
@@ -177,10 +155,10 @@ Or alternatively as a 3D scatter plot, along with the x,y,z bounding box
 
 .. code:: ipython2
 
-    ax = plot_vol_scatter(vca.get_vol_from_vfm(1),c='r',bg_img='nilearn_destrieux',
-                          bg_params={'s': 0.1, 'c':'k'},figsize=(20, 15))
+    >>> ax = plot_vol_scatter(vca.get_vol_from_vfm(1),c='r',bg_img='nilearn_destrieux',
+    >>>                         bg_params={'s': 0.1, 'c':'k'},figsize=(20, 15))
     
-    ax.set_xlim([0,200]); ax.set_ylim([0,200]); ax.set_zlim([0,200]);
+    >>> ax.set_xlim([0,200]); ax.set_ylim([0,200]); ax.set_zlim([0,200]);
 
 
 .. parsed-literal::
@@ -196,11 +174,10 @@ We can also view the weights matrix like so:
 
 .. code:: ipython2
 
-    fig, ax = plt.subplots(figsize=(16,12))
-    
-    sns.heatmap(np.log1p(vca.weights),xticklabels=vca.region_labels,
-                yticklabels=vca.region_labels,ax=ax);
-    plt.tight_layout()
+    >>> fig, ax = plt.subplots(figsize=(16,12))
+    >>> sns.heatmap(np.log1p(vca.weights),xticklabels=vca.region_labels,
+    >>>               yticklabels=vca.region_labels,ax=ax);
+    >>> plt.tight_layout()
 
 
 
@@ -214,7 +191,7 @@ associated parcellation, including cortical/subcortical labels
 
 .. code:: ipython2
 
-    vca.cortex
+    >>> vca.cortex
 
 
 
@@ -235,7 +212,7 @@ associated parcellation, including cortical/subcortical labels
 
 .. code:: ipython2
 
-    vca.hemispheres
+    >>> vca.hemispheres
 
 
 
@@ -256,7 +233,7 @@ associated parcellation, including cortical/subcortical labels
 
 .. code:: ipython2
 
-    vca.region_mapping_fsav_lh
+    >>> vca.region_mapping_fsav_lh
 
 
 
@@ -269,7 +246,7 @@ associated parcellation, including cortical/subcortical labels
 
 .. code:: ipython2
 
-    vca.region_mapping_fsav_rh
+    >>> vca.region_mapping_fsav_rh
 
 
 
@@ -284,9 +261,9 @@ which can be used for, e.g. plotting ROI data on a surface
 
 .. code:: ipython2
 
-    f = '/opt/freesurfer/freesurfer/subjects/fsaverage/surf/lh.inflated'
-    vtx,tri = nib.freesurfer.read_geometry(f)
-    plot_surf_roi([vtx,tri],vca.region_mapping_fsav_lh);
+    >>> f = '/opt/freesurfer/freesurfer/subjects/fsaverage/surf/lh.inflated'
+    >>> vtx,tri = nib.freesurfer.read_geometry(f)
+    >>> plot_surf_roi([vtx,tri],vca.region_mapping_fsav_lh);
 
 
 
