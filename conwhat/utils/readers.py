@@ -121,7 +121,7 @@ def make_nx_graph(vfms,bboxes,weights,region_labels,hemis,cortex):
     ad['idx'] = idx
     ad['weight'] = weights[roi1,roi2]
 
-    n1,n2 = G.node[roi1],G.node[roi2]
+    n1,n2 = G.node[roi1]['attr_dict'],G.node[roi2]['attr_dict']
 
     # (ibid...)
     if '_to_' in name:
