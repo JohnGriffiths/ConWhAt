@@ -13,21 +13,21 @@ types (Volumetric / Streamlinetric).
 
 .. code-block:: python
 
-    >>># ConWhAt stuff
-    >>>from conwhat import VolConnAtlas,StreamConnAtlas,VolTractAtlas,StreamTractAtlas
-    >>>from conwhat.viz.volume import plot_vol_scatter
+    >>> # ConWhAt stuff
+    >>> from conwhat import VolConnAtlas,StreamConnAtlas,VolTractAtlas,StreamTractAtlas
+    >>> from conwhat.viz.volume import plot_vol_scatter
     
-    >>># Neuroimaging stuff
-    >>>import nibabel as nib
-    >>>from nilearn.plotting import plot_stat_map,plot_surf_roi
+    >>> # Neuroimaging stuff
+    >>> import nibabel as nib
+    >>> from nilearn.plotting import plot_stat_map,plot_surf_roi
     
-    >>># Viz stuff
-    >>>%matplotlib inline
-    >>>from matplotlib import pyplot as plt
-    >>>import seaborn as sns
+    >>> # Viz stuff
+    >>> %matplotlib inline
+    >>> from matplotlib import pyplot as plt
+    >>> import seaborn as sns
     
-    >>># Generic stuff
-    >>>import glob, numpy as np, pandas as pd, networkx as nx
+    >>> # Generic stuff
+    >>> import glob, numpy as np, pandas as pd, networkx as nx
 
 
 We'll start with the scale 33 lausanne 2008 volumetric
