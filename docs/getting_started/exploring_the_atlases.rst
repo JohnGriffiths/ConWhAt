@@ -41,9 +41,9 @@ Define the atlas name and top-level directory location
 
 Initialize the atlas class
 
-.. code:: ipython2
+.. code-block:: python
 
-    >>>vca = VolConnAtlas(atlas_dir=atlas_dir + '/' + atlas_name,
+    vca = VolConnAtlas(atlas_dir=atlas_dir + '/' + atlas_name,
                             atlas_name=atlas_name)
 
 
