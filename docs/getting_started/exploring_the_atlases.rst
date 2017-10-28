@@ -29,21 +29,23 @@ types (Volumetric / Streamlinetric).
     >>># Generic stuff
     >>>import glob, numpy as np, pandas as pd, networkx as nx
 
+
 We'll start with the scale 33 lausanne 2008 volumetric
 connectivity-based atlas.
 
 Define the atlas name and top-level directory location
 
-.. code:: ipython2
+.. code-block:: python
 
     >>>atlas_dir = '/scratch/hpc3230/Data/conwhat_atlases'
-    >>>atlas_name = 'CWL2k8Sc33Vol3d100s_v01'
+    >>>atlas_name = 'CWL2k8Sc33Vol3d100s_v01'  
+
 
 Initialize the atlas class
 
 .. code-block:: python
 
-    vca = VolConnAtlas(atlas_dir=atlas_dir + '/' + atlas_name,
+    >>>vca = VolConnAtlas(atlas_dir=atlas_dir + '/' + atlas_name,
                             atlas_name=atlas_name)
 
 
@@ -56,12 +58,9 @@ Initialize the atlas class
 
 This atlas object contains various pieces of general information
 
-.. code:: ipython2
+.. code-block:: python
 
     >>> vca.atlas_name
-
-
-
 
 .. parsed-literal::
 
@@ -69,12 +68,9 @@ This atlas object contains various pieces of general information
 
 
 
-.. code:: ipython2
+.. code-block:: python
 
     >>> vca.atlas_dir
-
-
-
 
 .. parsed-literal::
 
@@ -92,11 +88,9 @@ Additionally, connectivity-based atlases also contain a ``networkx``
 graph object ``vca.Gnx``, which contains information about each
 connectome edge
 
-.. code:: ipython2
+.. code-block:: python
 
     >>> vca.Gnx.edges[(10,35)]
-
-
 
 
 .. parsed-literal::
