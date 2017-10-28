@@ -48,9 +48,6 @@ Initialize the atlas class
     >>>vca = VolConnAtlas(atlas_dir=atlas_dir + '/' + atlas_name,
                             atlas_name=atlas_name)
 
-
-.. parsed-literal::
-
     loading file mapping
     loading vol bbox
     loading connectivity
