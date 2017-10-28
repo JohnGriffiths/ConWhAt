@@ -1,6 +1,6 @@
-=============================
-Exploring the ConWhAt atlases
-=============================
+======================
+Exploring the atlases
+======================
 
 There are four different atlas types in ConWhat, corresponding to the 2
 ontology types (Tract-based / Connectivity-Based) and 2 representation
