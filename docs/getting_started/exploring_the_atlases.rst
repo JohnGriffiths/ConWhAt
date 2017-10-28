@@ -58,9 +58,7 @@ This atlas object contains various pieces of general information
 .. code-block:: python
 
     >>> vca.atlas_name
-
-.. parsed-literal::
-
+    
     'CWL2k8Sc33Vol3d100s_v01'
 
 
@@ -68,8 +66,6 @@ This atlas object contains various pieces of general information
 .. code-block:: python
 
     >>> vca.atlas_dir
-
-.. parsed-literal::
 
     '/scratch/hpc3230/Data/conwhat_atlases/CWL2k8Sc33Vol3d100s_v01'
 
@@ -170,14 +166,10 @@ The ``vca`` object also contains x,y,z bounding boxes for each structure
 We also stored additional useful information about the ROIs in the
 associated parcellation, including cortical/subcortical labels
 
-.. code:: ipython2
+
+.. code-block:: python
 
     >>> vca.cortex
-
-
-
-
-.. parsed-literal::
 
     array([ 1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,
             1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,
@@ -191,14 +183,9 @@ associated parcellation, including cortical/subcortical labels
 
 ...hemisphere labels
 
-.. code:: ipython2
+.. code-block:: python
 
     >>> vca.hemispheres
-
-
-
-
-.. parsed-literal::
 
     array([ 1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,
             1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,  1.,
@@ -212,27 +199,17 @@ associated parcellation, including cortical/subcortical labels
 
 ...and region mappings to freesurfer's fsaverage brain
 
-.. code:: ipython2
+.. code-block:: python
 
     >>> vca.region_mapping_fsav_lh
-
-
-
-
-.. parsed-literal::
 
     array([ 24.,  29.,  28., ...,  16.,   7.,   7.])
 
 
 
-.. code:: ipython2
+.. code-block:: python
 
     >>> vca.region_mapping_fsav_rh
-
-
-
-
-.. parsed-literal::
 
     array([ 24.,  29.,  22., ...,   9.,   9.,   9.])
 
@@ -240,13 +217,11 @@ associated parcellation, including cortical/subcortical labels
 
 which can be used for, e.g. plotting ROI data on a surface
 
-.. code:: ipython2
+.. code-block:: python
 
     >>> f = '/opt/freesurfer/freesurfer/subjects/fsaverage/surf/lh.inflated'
     >>> vtx,tri = nib.freesurfer.read_geometry(f)
     >>> plot_surf_roi([vtx,tri],vca.region_mapping_fsav_lh);
-
-
 
 .. image:: ../figs/rois_on_surf.png
 
