@@ -9,7 +9,9 @@ types (Volumetric / Streamlinetric).
 (More on this schema
 `here <http://conwhat.readthedocs.io/en/latest/about_conwhat/ontology_and_representation.html>`__)
 
-.. code:: ipython2
+
+
+.. code-block:: python
 
     >>># ConWhAt stuff
     >>>from conwhat import VolConnAtlas,StreamConnAtlas,VolTractAtlas,StreamTractAtlas
