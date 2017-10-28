@@ -1,5 +1,5 @@
 =============================
-Exploring The ConWhAt Atlases
+Exploring the ConWhAt atlases
 =============================
 
 There are four different atlas types in ConWhat, corresponding to the 2
