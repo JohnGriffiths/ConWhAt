@@ -37,15 +37,15 @@ Define the atlas name and top-level directory location
 
 .. code-block:: python
 
-    >>>atlas_dir = '/scratch/hpc3230/Data/conwhat_atlases'
-    >>>atlas_name = 'CWL2k8Sc33Vol3d100s_v01'  
+    >>> atlas_dir = '/scratch/hpc3230/Data/conwhat_atlases'
+    >>> atlas_name = 'CWL2k8Sc33Vol3d100s_v01'  
 
 
 Initialize the atlas class
 
 .. code-block:: python
 
-    >>>vca = VolConnAtlas(atlas_dir=atlas_dir + '/' + atlas_name,
+    >>> vca = VolConnAtlas(atlas_dir=atlas_dir + '/' + atlas_name,
                             atlas_name=atlas_name)
 
     loading file mapping
@@ -89,9 +89,6 @@ connectome edge
 
     >>> vca.Gnx.edges[(10,35)]
 
-
-.. parsed-literal::
-
     {'attr_dict': {'4dvolind': nan,
       'fullname': 'L_paracentral_to_L_caudate',
       'idx': 1637,
@@ -110,17 +107,14 @@ connectome edge
 
 Individual atlas entry nifti images can be grabbed like so
 
-.. code:: ipython2
+.. code-block:: python
 
     >>> img = vca.get_vol_from_vfm(1637)
-
-
-.. parsed-literal::
 
     getting atlas entry 1637: image file /scratch/hpc3230/Data/conwhat_atlases/CWL2k8Sc33Vol3d100s_v01/vismap_grp_11-36_norm.nii.gz
 
 
-.. code:: ipython2
+.. code-block:: python
 
     >>> plot_stat_map(img)
 
@@ -130,11 +124,9 @@ Individual atlas entry nifti images can be grabbed like so
 
 Or alternatively as a 3D scatter plot, along with the x,y,z bounding box
 
-.. code:: ipython2
+.. code-block:: python
 
     >>> vca.bbox.ix[1637]
-
-.. parsed-literal::
 
     xmin     61
     xmax     92
@@ -146,15 +138,11 @@ Or alternatively as a 3D scatter plot, along with the x,y,z bounding box
 
 
 
-.. code:: ipython2
+.. code-block:: python
 
     >>> ax = plot_vol_scatter(vca.get_vol_from_vfm(1),c='r',bg_img='nilearn_destrieux',
     >>>                         bg_params={'s': 0.1, 'c':'k'},figsize=(20, 15))
-    
     >>> ax.set_xlim([0,200]); ax.set_ylim([0,200]); ax.set_zlim([0,200]);
-
-
-.. parsed-literal::
 
     getting atlas entry 1: image file /scratch/hpc3230/Data/conwhat_atlases/CWL2k8Sc33Vol3d100s_v01/vismap_grp_39-56_norm.nii.gz
 
