@@ -388,20 +388,23 @@ def calc_streams_in_roi(dpy_file,roi_dat,stream_idxs):
 
 
 
-def compute_vol_scalar_stats():
+def compute_vol_scalar_stats(params):
 
-  print 'computing vol scalar stats'
-
-
-def compute_stream_hit_stats():
-
-  print 'computing stream hit stats'
+  print('computing vol scalar stats')
+  raise NotImplementedError
 
 
-def compute_stream_scalar_stats():
+def compute_stream_hit_stats(params):
+
+  print('computing stream hit stats')
+  raise NotImplementedError
 
 
-  print 'computing stream scalar stats'
+def compute_stream_scalar_stats(params):
+
+  print('computing stream scalar stats')
+  raise NotImplementedError
+
 
 
 

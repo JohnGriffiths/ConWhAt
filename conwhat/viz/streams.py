@@ -54,7 +54,7 @@ def get_track_vis_pic(trk_file, length=None,bg_image=None,bz=None, sc='/tmp/movi
   if tr: 
     cmd += ' -s -r %s' %tr
     
-  if tc: 
+  if tc:
     cmd += ' -c %s ' %tc
   if aa: cmd+= ' -aa '
        
@@ -74,11 +74,13 @@ def get_track_vis_pic(trk_file, length=None,bg_image=None,bz=None, sc='/tmp/movi
 
 def plot_stream_cnxn():
 
-  print 'plotting streamlinetric connection'
+  print('plotting streamlinetric connection')
+  raise NotImplementedError
 
 
 def plot_stream_tract():
 
-  print 'plotting streamlinetric tract'
+  print('plotting streamlinetric tract')
+  raise NotImplementedError
 
 

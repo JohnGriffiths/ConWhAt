@@ -14,17 +14,17 @@ from nilearn.image import index_img
 
 from nilearn.plotting import plot_glass_brain
 
-from utils.readers import (load_connectivity,load_vol_file_mappings,load_vol_bboxes,
+from .utils.readers import (load_connectivity,load_vol_file_mappings,load_vol_bboxes,
                            load_stream_file_mappings,load_stream_bboxes,
                            make_nx_graph,dpy_to_trk)
 
-from utils.stats import (compute_vol_hit_stats,compute_vol_scalar_stats,
+from .utils.stats import (compute_vol_hit_stats,compute_vol_scalar_stats,
                          compute_streams_in_roi,#compute_stream_hit_stats,compute_stream_scalar_stats,
                          hit_stats_to_nx)
 
-#from viz.network import plot_network,plot_matrix
-#from viz.volume import plot_vol_cnxn,plot_vol_tract
-#from viz.streams import plot_stream_cnxn,plot_stream_tract
+from .viz.network import plot_network, plot_matrix
+from .viz.volume import plot_vol_cnxn, plot_vol_tract
+from .viz.streams import plot_stream_cnxn, plot_stream_tract
 
 
 
@@ -38,7 +38,7 @@ class _Atlas(): # object):
 
   def __init__(self):
 
-    print 'blah'
+    print('blah')
 
 
 class _VolAtlas(_Atlas):
@@ -61,6 +61,7 @@ class _VolAtlas(_Atlas):
     self.vfms,self.atlas_dir = load_vol_file_mappings(atlas_name=atlas_name,atlas_dir=atlas_dir)
     self.bbox = load_vol_bboxes(atlas_name=atlas_name,atlas_dir=atlas_dir)
 
+    self.scalar_stats = dict()
 
   def get_vol_from_vfm(self,idx):		
     """ 		
@@ -174,7 +175,8 @@ class VolTractAtlas(_VolAtlas):
   def plot_tract(self,atlas_name):
 
     # (uses plotting param defaults tuned to JHU atlas)
-    plot_tract()
+    # plot_tract()
+    raise NotImplementedError
 
 
 
@@ -206,6 +208,8 @@ class VolConnAtlas(_VolAtlas):
  
     # Compile node and connectivity info into a networkx graph
     self.Gnx = make_nx_graph(self.vfms,self.bbox,ws,rls,hs,ctx)
+
+    self.modcons = dict()
 
 
   @property
@@ -282,13 +286,17 @@ class VolConnAtlas(_VolAtlas):
     return img
 
 
+  def modify_vol_connectome(self):
+
+    raise NotImplementedError
+
   def modify_connectome(self, name='mc1',function=''):
     """
     Modify canonical connectome using hit or scalar 
     stats, and store in this obj
     """
 
-    res = modify_vol_connectome()
+    res = self.modify_vol_connectome()
 
     self.modcons[name] = res
    
@@ -444,6 +452,8 @@ class StreamConnAtlas(_StreamAtlas):
     # Compile node and connectivity info into a networkx graph
     self.Gnx = make_nx_graph(self.sfms,self.bbox,ws,rls,hs,ctx)
 
+    self.modcons = dict()
+
 
 
   def get_rois_from_idx(self,idx):
@@ -484,7 +494,8 @@ class StreamConnAtlas(_StreamAtlas):
 
 
 
-
+  def modify_stream_connectome(self):
+    raise NotImplementedError
 
   def modify_connectome(self, name='mc1',function=''):
     """
@@ -492,7 +503,7 @@ class StreamConnAtlas(_StreamAtlas):
     stats, and store in this obj
     """
 
-    res = modify_stream_connectome()
+    res = self.modify_stream_connectome()
 
     self.modcons[name] = res
    
@@ -521,7 +532,7 @@ class StreamConnAtlas(_StreamAtlas):
 
   def plot_cnxns(self):
 
-    plot_stream_cnxns()
+    plot_stream_cnxn()
 
 
 
