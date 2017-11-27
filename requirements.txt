@@ -6,3 +6,6 @@ dipy
 joblib
 matplotlib
 sklearn
+pyyaml
+networkx
+indexed_gzip
