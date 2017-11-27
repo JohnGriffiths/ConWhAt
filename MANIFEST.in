@@ -1,0 +1,2 @@
+include versioneer.py
+include conwhat/_version.py
