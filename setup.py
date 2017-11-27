@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 import versioneer
 
 setup(name='conwhat',
-      version=versioneer.get_versions(),
+      version=versioneer.get_version(),
       cmdclass=versioneer.get_cmdclass(),
       description='python library for connectome-based white matter atlas analyses in neuroimaging',
       long_description='python library for connectome-based white matter atlas analyses in neuroimaging',
