@@ -4,6 +4,7 @@ Atlas class definitions
 
 # Author: John Griffiths
 # License: simplified BSD
+from __future__ import print_function
 
 import os
 
@@ -80,10 +81,10 @@ class _VolAtlas(_Atlas):
     		
     if os.path.isfile(nii_file):		
       if (np.isnan(volnum) or volnum == 'nan'):		
-        print 'getting atlas entry %s: image file %s'  %(idx,nii_file)		
+        print('getting atlas entry {}: image file {} ' % (idx,nii_file))
         img = nib.load(nii_file)		
       else:		
-        print 'getting atlas entry %s: volume %s from image file %s'  %(idx,volnum,nii_file)		
+        print('getting atlas entry {}: volume %s from image file {}' % (idx,volnum,nii_file))
         img = index_img(nii_file,volnum)		
  		
     return img
@@ -406,7 +407,7 @@ class _StreamAtlas(_Atlas):
 
   def write_subset_to_trk(self,ref_file,outfile,stream_inds='all'):
 
-    print 'writing streams to trk file: %s' %outfile
+    print('writing streams to trk file: {}' % outfile)
     dpy_to_trk(self.dpy_file,ref_file,outfile,inds=stream_inds)
 
 
