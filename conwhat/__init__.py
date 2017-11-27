@@ -1,7 +1,7 @@
 
 __all__ = [ 'VolTractAtlas', 'VolConnAtlas', 'StreamTractAtlas', 'StreamConnAtlas' ]
 
-from atlas import (VolTractAtlas,VolConnAtlas,
+from .atlas import (VolTractAtlas,VolConnAtlas,
                    StreamTractAtlas,StreamConnAtlas)
 
 from ._version import get_versions
