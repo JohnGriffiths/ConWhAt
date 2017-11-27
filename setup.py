@@ -13,7 +13,7 @@ setup(name='conwhat',
       author_email='j.davidgriffiths@gmail.com',
       url='https://github.com/JohnGriffiths/conwhat',
       packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
-      install_requires=['numpy',  'setuptools', 'pandas', 'nibabel', 'nilearn', 'dipy', 'joblib', 'matplotlib'],
+      install_requires=['numpy',  'setuptools', 'pandas', 'nibabel', 'sklearn', 'nilearn', 'dipy', 'joblib', 'matplotlib'],
       classifiers=[
           'Intended Audience :: Science/Research',
           'Programming Language :: Python',

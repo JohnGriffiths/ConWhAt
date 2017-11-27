@@ -5,3 +5,4 @@ nilearn
 dipy
 joblib
 matplotlib
+sklearn
