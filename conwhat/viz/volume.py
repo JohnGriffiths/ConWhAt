@@ -157,3 +157,11 @@ def plot_vol_and_rois_nilearn(vol,labels,roi1_img=None,roi2_img=None,
   return display
 
     
+def plot_vol_cnxn():
+  ""
+
+  raise NotImplementedError
+
+def plot_vol_tract():
+
+  raise NotImplementedError

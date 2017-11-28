@@ -9,13 +9,16 @@ Utils for visualizing ConWhAt networks
 
 def plot_network():
 
-  print 'plotting network'
+  print('plotting network')
 
+  return
 
 
 def plot_matrix():
 
-  print 'plotting matrix'
+  print('plotting matrix')
+
+  return
 
 
 

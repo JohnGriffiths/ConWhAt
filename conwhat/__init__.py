@@ -1,10 +1,9 @@
 
+__all__ = [ 'VolTractAtlas', 'VolConnAtlas', 'StreamTractAtlas', 'StreamConnAtlas' ]
 
-
-__version__ = '0.1.dev0'
-
-
-from atlas import (VolTractAtlas,VolConnAtlas,
+from .atlas import (VolTractAtlas,VolConnAtlas,
                    StreamTractAtlas,StreamConnAtlas)
 
-
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions
