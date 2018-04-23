@@ -38,22 +38,22 @@ Here is a list of the currently and soon-to-be available ConWhAt atlases:
 | CWL2k8Sc250Vol3dS100   | Lausanne 2008 scale 250 parcellation | *Soon*                                                                                    | 
 |                        | volumetric, 100subjects              |                                                                                           | 
 +------------------------+--------------------------------------+-------------------------------------------------------------------------------------------+
-| CWL2k8Sc500Vol3dS100   | Lausanne 2008 scale 500 parcellation | *Soon* `(link) <https://www.nitrc.org/frs/download.php/10381/CWL2k8Sc60Vol3d100s_v1.zip>`_|
+| CWL2k8Sc500Vol3dS100   | Lausanne 2008 scale 500 parcellation | *Soon*                                                                                    |
 |                        | volumetric, 100subjects              |                                                                                           | 
 +------------------------+--------------------------------------+-------------------------------------------------------------------------------------------+
-| CWL2k8Sc33StreamS100   | Lausanne 2008 scale 33 parcellation  | *Now* `(link) <https://www.nitrc.org/frs/download.php/10381/CWL2k8Sc60Vol3d100s_v1.zip>`_ |
+| CWL2k8Sc33StreamS100   | Lausanne 2008 scale 33 parcellation  | *Soon*                                                                                    |
 |                        | streamlinetric, 100subjects          |                                                                                           | 
 +------------------------+--------------------------------------+-------------------------------------------------------------------------------------------+
-| CWL2k8Sc60StreamS100   | Lausanne 2008 scale 60 parcellation  | *Now* `(link) <https://www.nitrc.org/frs/download.php/10381/CWL2k8Sc33Vol3d100s_v1.zip>`_ |
+| CWL2k8Sc60StreamS100   | Lausanne 2008 scale 60 parcellation  | *Soon*                                                                                    |
 |                        | streamlinetric, 100subjects          |                                                                                           |
 +------------------------+--------------------------------------+-------------------------------------------------------------------------------------------+
-| CWL2k8Sc125StreamS100  | Lausanne 2008 scale 125 parcellation | *Now* `(link) <https://www.nitrc.org/frs/download.php/10381/CWL2k8Sc60Vol3d100s_v1.zip>`_ |
+| CWL2k8Sc125StreamS100  | Lausanne 2008 scale 125 parcellation | *Soon*                                                                                    |
 |                        | streamlinetric, 100subjects          |                                                                                           |
 +------------------------+--------------------------------------+-------------------------------------------------------------------------------------------+
-| CWL2k8Sc250StreamS100  | Lausanne 2008 scale 250 parcellation | *Now* `(link) <https://www.nitrc.org/frs/download.php/10381/CWL2k8Sc60Vol3d100s_v1.zip>`_ |
+| CWL2k8Sc250StreamS100  | Lausanne 2008 scale 250 parcellation | *Soon*                                                                                    |
 |                        | streamlinetric, 100subjects          |                                                                                           |
 +------------------------+--------------------------------------+-------------------------------------------------------------------------------------------+
-| CWL2k8Sc500StreamS100  | Lausanne 2008 scale 500,parcellation | *Soon* `(link) <https://www.nitrc.org/frs/download.php/10381/CWL2k8Sc60Vol3d100s_v1.zip>`_|
+| CWL2k8Sc500StreamS100  | Lausanne 2008 scale 500,parcellation | *Soon*                                                                                    |
 |                        | streamlinetric, 100subjects          |                                                                                           | 
 +------------------------+--------------------------------------+-------------------------------------------------------------------------------------------+
 
