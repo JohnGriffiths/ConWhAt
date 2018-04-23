@@ -565,24 +565,6 @@ Now plotting on a glass brain:
     #edge_vmin=0,edge_vmax=1)
 
 
-::
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-1-0477afc1d74b> in <module>()
-    ----> 1 fig, ax = plt.subplots(figsize=(16,6))
-          2 plot_connectome(tpr_adj.values,ccs_arr,axes=ax,edge_threshold=0.2,colorbar=True,
-          3                     edge_cmap='Reds',edge_vmin=0,edge_vmax=1.,
-          4                     node_color='lightgrey',node_kwargs={'alpha': 0.4});
-          5 #edge_vmin=0,edge_vmax=1)
-
-
-    NameError: name 'plt' is not defined
-
-
 .. code:: 
 
     fig, ax = plt.subplots(figsize=(16,6))
