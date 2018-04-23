@@ -98,5 +98,24 @@ def fetch_conwhat_atlas(atlas_name,dataset_dir,resume=True, verbose=1,
 
 
 
+def symlink_stream_files(targ_folder,source_folders,
+                         base_dir,
+                         fname = 'atlas_streams.dpy',
+                         remove_existing=False):
 
+  for source_folder in source_folders:
+      
+    targfile = '%s/%s/%s' %(base_dir,targ_folder,fname)
+    sourcefile = '%s/%s/%s' %(base_dir,source_folder,fname)
+
+    if os.path.isfile(sourcefile): 
+      if remove_existing == True:
+        os.system('rm -r %s' %sourcefile)
+    os.system('ln -s %s %s' %(targfile,sourcefile))
+
+
+
+
+
+ 
 

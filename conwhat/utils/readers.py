@@ -99,9 +99,9 @@ def make_nx_graph(vfms,bboxes,weights,region_labels,hemis,cortex):
     hemi = hemis[node_it]
     ctx = cortex[node_it]
 
-    G.add_node(node_it, attr_dict={'region_label': rl,
-                                   'hemisphere': hemi,
-                                   'cortex': ctx})
+    G.add_node(node_it, **{'region_label': rl,
+                           'hemisphere': hemi,
+                           'cortex': ctx})
 
   # add edge info
   for idx in vfms.index:
@@ -121,7 +121,7 @@ def make_nx_graph(vfms,bboxes,weights,region_labels,hemis,cortex):
     ad['idx'] = idx
     ad['weight'] = weights[roi1,roi2]
 
-    n1,n2 = G.node[roi1]['attr_dict'],G.node[roi2]['attr_dict']
+    n1,n2 = G.node[roi1],G.node[roi2]
 
     # (ibid...)
     if '_to_' in name:
@@ -132,7 +132,7 @@ def make_nx_graph(vfms,bboxes,weights,region_labels,hemis,cortex):
     ad['fullname'] = fullname
 
 
-    G.add_edge(roi1,roi2,attr_dict=ad)
+    G.add_edge(roi1,roi2,**ad)
     
 
   return G
@@ -214,9 +214,9 @@ def make_streams_nx_graph(sfms,bboxes,weights,region_labels,hemis,cortex):
     hemi = hemis[node_it]
     ctx = cortex[node_it]
 
-    G.add_node(node_it, attr_dict={'region_label': rl,
-                                   'hemisphere': hemi,
-                                   'cortex': ctx})
+    G.add_node(node_it, **{'region_label': rl,
+                           'hemisphere': hemi,
+                           'cortex': ctx})
 
   # add edge info
   for idx in sfms.index:
@@ -247,7 +247,7 @@ def make_streams_nx_graph(sfms,bboxes,weights,region_labels,hemis,cortex):
     ad['fullname'] = fullname
 
 
-    G.add_edge(roi1,roi2,attr_dict=ad)
+    G.add_edge(roi1,roi2,**ad)
 
 
 
@@ -322,7 +322,7 @@ def dpy_to_trk(dpy_file,ref,outfile,inds='all'):
     hdr['voxel_size'] = ref_img.get_header().get_zooms()   
     hdr['dim'] = ref_img.shape
     hdr['voxel_order'] = "LAS"#"RAS"
-    hdr['vox_to_ras'] = ref_img.affine
+    hdr['vox_to_ras'] = ref_img.Affine
     zooms = ref_img.header.get_zooms()
 
     # Load streamlines

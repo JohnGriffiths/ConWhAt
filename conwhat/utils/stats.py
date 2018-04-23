@@ -112,14 +112,14 @@ def hit_stats_to_nx(df_hit_stats,Gnx,vfms):
   """
   Ghs = nx.Graph()
 
-  for node,attrs in Gnx.node.items(): Ghs.add_node(node,attr_dict=attrs)
+  for node,attrs in Gnx.node.items(): Ghs.add_node(node,**attrs)
 
   for idx in df_hit_stats.index:
       dfi = df_hit_stats.ix[idx]
       vfm = vfms.ix[idx]
       roi1,roi2 = vfm['name'].split('_to_')
       roi1 = int(roi1); roi2 = int(roi2)
-      Ghs.add_edge(roi1,roi2,attr_dict=dfi.to_dict())
+      Ghs.add_edge(roi1,roi2,**dfi.to_dict())
 
   return Ghs
 
