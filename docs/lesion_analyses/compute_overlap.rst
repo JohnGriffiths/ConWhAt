@@ -2,7 +2,7 @@
 Compute lesion overlap
 ======================
 
-.. code:: 
+.. code-block:: python
 
     # ConWhAt stuff
     from conwhat import VolConnAtlas,StreamConnAtlas,VolTractAtlas,StreamTractAtlas
@@ -26,13 +26,13 @@ Compute lesion overlap
 We now use the synthetic lesion constructed in the previous example in a
 ConWhAt lesion analysis.
 
-.. code:: 
+.. code-block:: python
 
     lesion_file = 'synthetic_lesion_20mm_sphere_-46_-60_6.nii.gz' # we created this file from scratch in the previous example
 
 Take another quick look at this mask:
 
-.. code:: 
+.. code-block:: python
 
     lesion_img = nib.load(lesion_file)
     plot_roi(lesion_file);
@@ -47,20 +47,20 @@ spatial detail, it makes sense to use one of the lower-resolution atlas.
 As one might expect, computation time is considerably faster for
 lower-resolution atlases.
 
-.. code:: 
+.. code-block:: python
 
-    cw_atlases_dir = '/global/scratch/hpc3230/Data/conwhat_atlases'  # change this accordingly
-    atlas_name = 'CWL2k8Sc33Vol3d100s_v01'
-    atlas_dir = '%s/%s' %(cw_atlases_dir, atlas_name)
+    >>> cw_atlases_dir = '/global/scratch/hpc3230/Data/conwhat_atlases'  # change this accordingly
+    >>> atlas_name = 'CWL2k8Sc33Vol3d100s_v01'
+    >>> atlas_dir = '%s/%s' %(cw_atlases_dir, atlas_name)
 
 See the previous tutorial on 'exploring the conwhat atlases' for more
 info on how to examine the components of a given atlas in *ConWhAt*.
 
 Initialize the atlas
 
-.. code:: 
+.. code-block:: python
 
-    cw_vca = VolConnAtlas(atlas_dir=atlas_dir)
+    >>> cw_vca = VolConnAtlas(atlas_dir=atlas_dir)
 
 
 .. parsed-literal::
@@ -84,16 +84,17 @@ specific sets of regions.
 As we are using a relatively small atlas, and our lesion is not too
 extensive, we can assess all connections.
 
-.. code:: 
 
-    idxs = 'all' # alternatively, something like: range(1,100), indicates the first 100 cnxns (rows in .vmfs)
+.. code-block:: python
+
+    >>> idxs = 'all' # alternatively, something like: range(1,100), indicates the first 100 cnxns (rows in .vmfs)
 
 Now, compute lesion overlap statistics.
 
-.. code:: 
+.. code-block:: python
 
-    jlc_dir = '/global/scratch/hpc3230/joblib_cache_dir' # this is the cache dir where joblib writes temporary files
-    lo_df,lo_nx = cw_vca.compute_hit_stats(lesion_file,idxs,n_jobs=4,joblib_cache_dir=jlc_dir)
+    >>> jlc_dir = '/global/scratch/hpc3230/joblib_cache_dir' # this is the cache dir where joblib writes temporary files
+    >>> lo_df,lo_nx = cw_vca.compute_hit_stats(lesion_file,idxs,n_jobs=4,joblib_cache_dir=jlc_dir)
 
 
 .. parsed-literal::
@@ -114,9 +115,9 @@ columns for each of a wide set of `statistical
 metrics <https://en.wikipedia.org/wiki/Sensitivity_and_specificity>`__
 for evaluating sensitivity and specificity of binary hit/miss data:
 
-.. code:: 
+.. code-block:: python
 
-    lo_df.head()
+    >>> lo_df.head()
 
 
 
@@ -317,9 +318,11 @@ divided by number of true positives + number of false negatives
 thresholded, binarized connectome edge image (group-level visitation
 map)
 
-.. code:: 
+.. code-block:: python 
 
-    lo_df[['TPR', 'corr_thrbin']].iloc[:10].T
+
+
+    >>> lo_df[['TPR', 'corr_thrbin']].iloc[:10].T
 
 
 
@@ -407,14 +410,14 @@ matrix)
 
 .. code:: 
 
-    tpr_adj = nx.to_pandas_adjacency(lo_nx,weight='TPR')
-    cpr_adj = nx.to_pandas_adjacency(lo_nx,weight='corr_thrbin')
+    >>> tpr_adj = nx.to_pandas_adjacency(lo_nx,weight='TPR')
+    >>> cpr_adj = nx.to_pandas_adjacency(lo_nx,weight='corr_thrbin')
 
 These two maps are, unsurprisingly, very similar:
 
-.. code:: 
+.. code-block:: python
 
-    np.corrcoef(tpr_adj.values.ravel(), cpr_adj.values.ravel())
+    >>> np.corrcoef(tpr_adj.values.ravel(), cpr_adj.values.ravel())
 
 
 
@@ -426,13 +429,11 @@ These two maps are, unsurprisingly, very similar:
 
 
 
-.. code:: 
+.. code-block:: python
 
-    fig, ax = plt.subplots(ncols=2, figsize=(12,4))
-    
-    sns.heatmap(tpr_adj,xticklabels='',yticklabels='',vmin=0,vmax=0.5,ax=ax[0]);
-    
-    sns.heatmap(cpr_adj,xticklabels='',yticklabels='',vmin=0,vmax=0.5,ax=ax[1]);
+    >>> fig, ax = plt.subplots(ncols=2, figsize=(12,4))
+    >>> sns.heatmap(tpr_adj,xticklabels='',yticklabels='',vmin=0,vmax=0.5,ax=ax[0]);
+    >>> sns.heatmap(cpr_adj,xticklabels='',yticklabels='',vmin=0,vmax=0.5,ax=ax[1]);
 
 
 
@@ -441,15 +442,13 @@ These two maps are, unsurprisingly, very similar:
 
 (...with an alternative color scheme...)
 
-.. code:: 
+.. code-block:: python 
 
-    fig, ax = plt.subplots(ncols=2, figsize=(12,4))
-    
-    sns.heatmap(tpr_adj, xticklabels='',yticklabels='',cmap='Reds',
-                       mask=tpr_adj.values==0,vmin=0,vmax=0.5,ax=ax[0]);
-    
-    sns.heatmap(cpr_adj,xticklabels='',yticklabels='',cmap='Reds',
-                       mask=cpr_adj.values==0,vmin=0,vmax=0.5,ax=ax[1]);
+    >>> fig, ax = plt.subplots(ncols=2, figsize=(12,4))
+    >>> sns.heatmap(tpr_adj, xticklabels='',yticklabels='',cmap='Reds',
+    >>>                   mask=tpr_adj.values==0,vmin=0,vmax=0.5,ax=ax[0]);
+    >>> sns.heatmap(cpr_adj,xticklabels='',yticklabels='',cmap='Reds',
+    >>>                   mask=cpr_adj.values==0,vmin=0,vmax=0.5,ax=ax[1]);
 
 
 
@@ -458,9 +457,9 @@ These two maps are, unsurprisingly, very similar:
 
 We can list directly the most affected (greatest % overlap) connections,
 
-.. code:: 
+.. code-block:: python 
 
-    cw_vca.vfms.loc[lo_df.index].head()
+    >>> cw_vca.vfms.loc[lo_df.index].head()
 
 
 
@@ -544,31 +543,31 @@ To plot the modification matrix information on a brain, we first need to
 some spatial locations to plot as nodes. For these, we calculate (an
 approprixation to) each atlas region's centriod location:
 
-.. code:: 
+.. code-block:: python 
 
-    parc_img = cw_vca.region_nii
-    parc_dat = parc_img.get_data()
-    parc_vals = np.unique(parc_dat)[1:]
+    >>> parc_img = cw_vca.region_nii
+    >>> parc_dat = parc_img.get_data()
+    >>> parc_vals = np.unique(parc_dat)[1:]
     
-    ccs = {roival: find_xyz_cut_coords(nib.Nifti1Image((dat==roival).astype(int),img.affine),
-                                       activation_threshold=0) for roival in roivals}
-    ccs_arr = np.array(ccs.values())
+    >>> ccs = {roival: find_xyz_cut_coords(nib.Nifti1Image((dat==roival).astype(int),img.affine),
+    >>>                                   activation_threshold=0) for roival in roivals}
+    >>> ccs_arr = np.array(ccs.values())
 
 Now plotting on a glass brain:
 
-.. code:: 
+.. code-block:: python 
 
-    fig, ax = plt.subplots(figsize=(16,6))
-    plot_connectome(tpr_adj.values,ccs_arr,axes=ax,edge_threshold=0.2,colorbar=True,
-                        edge_cmap='Reds',edge_vmin=0,edge_vmax=1.,
-                        node_color='lightgrey',node_kwargs={'alpha': 0.4});
-    #edge_vmin=0,edge_vmax=1)
+    >>> fig, ax = plt.subplots(figsize=(16,6))
+    >>> plot_connectome(tpr_adj.values,ccs_arr,axes=ax,edge_threshold=0.2,colorbar=True,
+    >>>                    edge_cmap='Reds',edge_vmin=0,edge_vmax=1.,
+    >>>                    node_color='lightgrey',node_kwargs={'alpha': 0.4});
+    >>> #edge_vmin=0,edge_vmax=1)
 
 
-.. code:: 
+.. code-block:: python 
 
-    fig, ax = plt.subplots(figsize=(16,6))
-    plot_connectome(cpr_adj.values,ccs_arr,axes=ax)
+    >>> fig, ax = plt.subplots(figsize=(16,6))
+    >>> plot_connectome(cpr_adj.values,ccs_arr,axes=ax)
 
 
 
