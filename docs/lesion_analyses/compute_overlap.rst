@@ -70,7 +70,6 @@ Initialize the atlas
     loading connectivity
 
 
-``cw_vca.vfms``
 
 Choose which connections to evaluate.
 
@@ -408,7 +407,7 @@ map)
 We can obtain these numbers as a 'modification matrix' (connectivity
 matrix)
 
-.. code:: 
+.. code-block:: python  
 
     >>> tpr_adj = nx.to_pandas_adjacency(lo_nx,weight='TPR')
     >>> cpr_adj = nx.to_pandas_adjacency(lo_nx,weight='corr_thrbin')
@@ -418,9 +417,6 @@ These two maps are, unsurprisingly, very similar:
 .. code-block:: python
 
     >>> np.corrcoef(tpr_adj.values.ravel(), cpr_adj.values.ravel())
-
-
-
 
 .. parsed-literal::
 
@@ -569,12 +565,6 @@ Now plotting on a glass brain:
     >>> fig, ax = plt.subplots(figsize=(16,6))
     >>> plot_connectome(cpr_adj.values,ccs_arr,axes=ax)
 
-
-
-
-.. parsed-literal::
-
-    <nilearn.plotting.displays.OrthoProjector at 0x7f454cea5b90>
 
 
 
