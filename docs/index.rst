@@ -43,13 +43,12 @@ include major front and/or backend changes )
    getting_started/installation 
    getting_started/downloading_atlases 
    getting_started/exploring_the_atlases  
-   getting_started/exploring_the_canonical_connectomes
-  
+
 
 .. toctree:: 
    :maxdepth: 1
-   :caption: Analyses of Brain Lesions
-  
+   :caption: Analyses of Brain Lesions
+  
    lesion_analyses/defining_a_lesion
    lesion_analyses/compute_overlap
 
