@@ -32,57 +32,62 @@ connectome-based decomposition analysis on this 'synthetic' lesion mask.
 
 --------------
 
-.. code:: ipython2
 
-    # ConWhAt stuff
-    from conwhat import VolConnAtlas,StreamConnAtlas,VolTractAtlas,StreamTractAtlas
-    from conwhat.viz.volume import plot_vol_and_rois_nilearn
-    
-    # Neuroimaging stuff
-    import nibabel as nib
-    from nilearn.plotting import plot_roi
-    from nipy.labs.spatial_models.mroi import subdomain_from_balls
-    from nipy.labs.spatial_models.discrete_domain import grid_domain_from_image
-    
-    # Viz stuff
-    %matplotlib inline
-    from matplotlib import pyplot as plt
-    
-    # Generic stuff
-    import numpy as np
+.. code-block:: python
 
+    >>> # ConWhAt stuff
+    >>> from conwhat import VolConnAtlas,StreamConnAtlas,VolTractAtlas,StreamTractAtlas
+    >>> from conwhat.viz.volume import plot_vol_and_rois_nilearn
+    
+    >>> # Neuroimaging stuff
+    >>> import nibabel as nib
+    >>> from nilearn.plotting import plot_roi
+    >>> from nipy.labs.spatial_models.mroi import subdomain_from_balls
+    >>> from nipy.labs.spatial_models.discrete_domain import grid_domain_from_image
+    
+    >>> # Viz stuff
+    >>> %matplotlib inline
+    >>> from matplotlib import pyplot as plt
+    
+    >>> # Generic stuff
+    >>> import numpy as np
+
+    
 Define some variables
 
-.. code:: ipython2
+.. code-block:: python
 
-    # Locate the standard space template image
-    fsl_dir = '/global/software/fsl/5.0.10'
-    t1_mni_file = fsl_dir + '/data/standard/MNI152_T1_1mm_brain.nii.gz'
-    t1_mni_img = nib.load(t1_mni_file)
+    >>> # Locate the standard space template image
+    >>> fsl_dir = '/global/software/fsl/5.0.10'
+    >>> t1_mni_file = fsl_dir + '/data/standard/MNI152_T1_1mm_brain.nii.gz'
+    >>> t1_mni_img = nib.load(t1_mni_file)
     
-    # This is the output we will save to file and use in the next example
-    lesion_file = 'synthetic_lesion_20mm_sphere_-46_-60_6.nii.gz'
+    >>> # This is the output we will save to file and use in the next example
+    >>> lesion_file = 'synthetic_lesion_20mm_sphere_-46_-60_6.nii.gz'
 
 Define the 'synthetic lesion' location and size using standard (MNI)
 space coordinates
 
-.. code:: ipython2
 
-    com = [-46,-60,6] # com = centre of mass
-    rad = 20             # radius
+.. code-block:: python
+
+    >>> com = [-46,-60,6] # com = centre of mass
+    >>> rad = 20             # radius
 
 Create the ROI
 
-.. code:: ipython2
 
-    domain = grid_domain_from_image(t1_mni_img)
-    lesion_img = subdomain_from_balls(domain,np.array([com]), np.array([rad])).to_image()
+.. code-block:: python
+
+    >>> domain = grid_domain_from_image(t1_mni_img)
+    >>> lesion_img = subdomain_from_balls(domain,np.array([com]), np.array([rad])).to_image()
 
 Plot on brain slices
 
-.. code:: ipython2
 
-    plot_roi(lesion_img,bg_img=t1_mni_img,black_bg=False);
+.. code-block:: python
+
+    >>> plot_roi(lesion_img,bg_img=t1_mni_img,black_bg=False);
 
 
 
@@ -91,8 +96,9 @@ Plot on brain slices
 
 Save to file
 
-.. code:: ipython2
 
-    lesion_img.to_filename(lesion_file)
+.. code-block:: python
+
+    >>> lesion_img.to_filename(lesion_file)
 
 ...now we move on to doing a lesion analysis with this file.
