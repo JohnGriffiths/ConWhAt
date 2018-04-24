@@ -17,6 +17,8 @@ was generated from Jupyter notebooks.
     :maxdepth: 3
     :glob:
 
+    overview.rst
+    installation.rst
     01_Downloading_ConWhAt_Atlases.ipynb       
     02_Exploring_ConWhAt_Atlases.ipynb         
     03_Defining_A_Lesion.ipynb                
