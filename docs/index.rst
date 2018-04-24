@@ -30,9 +30,9 @@ include major front and/or backend changes )
    :maxdepth: 1
    :caption: About ConWhAt
     
-   about_conwhat/overview
-   about_conwhat/ontology_and_representation
-   about_conwhat/conwhat_atlases
+   overview
+   ontology_and_representation
+   conwhat_atlases
 
 
 
@@ -40,18 +40,20 @@ include major front and/or backend changes )
    :maxdepth: 1
    :caption: Getting Started 
 
-   getting_started/installation 
-   getting_started/downloading_atlases 
-   getting_started/exploring_the_atlases  
-   getting_started/exploring_the_canonical_connectomes
+   installation 
+   getting_started
+   downloading_atlases 
+   getting_started
+   exploring_the_atlases  
+   exploring_the_canonical_connectomes
   
 
 .. toctree:: 
    :maxdepth: 1
    :caption: Analyses of Brain Lesions
   
-   lesion_analyses/defining_a_lesion
-   lesion_analyses/compute_overlap
+   defining_a_lesion
+   compute_overlap
 
 
 
@@ -59,9 +61,8 @@ include major front and/or backend changes )
    :maxdepth: 1
    :caption: Other Applications
    
-   other_applications/connectivity_based_decomposition_of_white_matter_tracts
-   other_applications/setting_up_tvb_simulations_from_conwhat_outputs
-   
+   connectivity_based_decomposition_of_white_matter_tracts
+   setting_up_tvb_simulations_from_conwhat_outpu
 
 
 
