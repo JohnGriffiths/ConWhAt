@@ -1,11 +1,4 @@
-numpy
-pandas
-nibabel
-nilearn
-dipy
-joblib
-matplotlib
 sphinx>=1.5.1
 nbsphinx
 ipykernel
-jupyter-alabaster-theme 
+jupyter-alabaster-theme
