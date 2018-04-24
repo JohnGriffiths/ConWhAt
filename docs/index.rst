@@ -22,10 +22,6 @@ can be viewed at https://github.com/JohnGriffiths/ConWhAt/doc/examples
 include major front and/or backend changes )
 
 
-
-
-
-
 .. toctree::
    :maxdepth: 1
    :caption: About ConWhAt
@@ -36,24 +32,24 @@ include major front and/or backend changes )
 
 
 
-.. toctree::
+.. toctree::.chat
    :maxdepth: 1
    :caption: Getting Started 
 
    installation.rst 
-   getting_started
-   downloading_atlases 
-   getting_started
-   exploring_the_atlases  
-   exploring_the_canonical_connectomes
+   getting_started.rst
+   downloading_atlases.rst 
+   getting_started.rst
+   exploring_the_atlases.rst 
+   exploring_the_canonical_connectomes.rst
   
 
 .. toctree:: 
    :maxdepth: 1
    :caption: Analyses of Brain Lesions
   
-   defining_a_lesion
-   compute_overlap
+   defining_a_lesion.rst
+   compute_overlap.rst
 
 
 
@@ -61,8 +57,14 @@ include major front and/or backend changes )
    :maxdepth: 1
    :caption: Other Applications
    
-   connectivity_based_decomposition_of_white_matter_tracts
-   setting_up_tvb_simulations_from_conwhat_outpu
+   connectivity_based_decomposition_of_white_matter_tracts.rst
+   setting_up_tvb_simulations_from_conwhat_outputs.rst
+   01_Downloading_ConWhAt_atlases.ipynb
+   02_Exploring_ConWhAt_atlases.ipynb	
+   03_Defining_a_lesion.ipynb
+   04_Assess_network_impact_of_lesion.ipynb
+
+   
 
 
 
