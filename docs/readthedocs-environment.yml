@@ -6,5 +6,5 @@ dependencies:
   - pandoc
   - nbconvert
   - ipykernel
-pip:
-  - jupyter-alabaster-theme
+  - pip:
+    - jupyter-alabaster-theme
