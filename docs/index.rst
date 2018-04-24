@@ -30,7 +30,7 @@ include major front and/or backend changes )
    :maxdepth: 1
    :caption: About ConWhAt
     
-   overview
+   overview.rst
    ontology_and_representation
    conwhat_atlases
 
@@ -40,7 +40,7 @@ include major front and/or backend changes )
    :maxdepth: 1
    :caption: Getting Started 
 
-   installation 
+   installation.rst 
    getting_started
    downloading_atlases 
    getting_started
