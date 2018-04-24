@@ -27,8 +27,8 @@ include major front and/or backend changes )
    :caption: About ConWhAt
     
    overview.rst
-   ontology_and_representation
-   conwhat_atlases
+   ontology_and_representation.rst
+   conwhat_atlases.rst
 
 
 
