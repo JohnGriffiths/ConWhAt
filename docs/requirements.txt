@@ -5,3 +5,6 @@ nilearn
 dipy
 joblib
 matplotlib
+sphinx>=1.5.1
+nbsphinx
+ipykernel
