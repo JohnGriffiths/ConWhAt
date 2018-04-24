@@ -11,32 +11,17 @@ Welcome to ConWhAt's documentation!
 All content shown below -- except for the section :doc:`a-normal-rst-file` --
 was generated from Jupyter notebooks.
 
-
-
 .. toctree::
-   :maxdepth: 3
-   :caption: About ConWhAt
-
+    :maxdepth: 3
+    :glob:
+  
    about_conwhat/overview
    about_conwhat/ontology_and_representation
-   about_conwhat/conwhat_atlases
-
-
-
-.. toctree::
-   :maxdepth: 3
-   :caption: Getting started
-
-   getting_started/installation
+   about_conwhat/conwhat_atlases
+   getting_started/installation
    01_Downloading_ConWhAt_Atlases.ipynb       
-   02_Exploring_ConWhAt_Atlases.ipynb         
-
-
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Analyses of Brain Lesions
-   03_Defining_A_Lesion.ipynb                
+   02_Exploring_ConWhAt_Atlases.ipynb
+   03_Defining_A_Lesion.ipynb                
    04_Assess_network_impact_of_lesion.ipynb 
 
 
