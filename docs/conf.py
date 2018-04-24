@@ -126,7 +126,7 @@ latex_elements = {
 }
 
 latex_documents = [
-    (master_doc, 'nbsphinx.tex', project, author, 'howto'),
+    (master_doc, 'ConWhAt.tex', project, author, 'howto'),
 ]
 
 latex_show_urls = 'footnote'
