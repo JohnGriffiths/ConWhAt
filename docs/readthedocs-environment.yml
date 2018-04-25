@@ -8,3 +8,4 @@ dependencies:
   - ipykernel
   - pip:
     - jupyter-alabaster-theme
+    - nbsphinx
