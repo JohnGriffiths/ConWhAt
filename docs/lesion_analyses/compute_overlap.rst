@@ -571,3 +571,18 @@ Now plotting on a glass brain:
 
 .. image:: output_33_1.png
 
+
+The lines in this figure show network connections (drawn as a straight line between two nodes) whose atlas image volume have a non-zero level of overlap with the synthetic lesion volume. Transparency and colour intensity indicate the magnitude of overlap. Thus the thickest, brightest red lines correspond to tracts that pass directly through the centre of the synthetic lesion mask, and for whom the lesion overlaps with a substantial amount of their total volume. Light, thinner lines, extending to/from the contralateral hemisphere and frontal cortex, correspond to connections with a proportionally smaller degree of lesion load. 
+
+
+
+
+
+
+
+
+
+
+
+
+
