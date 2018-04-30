@@ -6,7 +6,7 @@ Conducting a lesion analysis in ConWhAt is extremely simple. All that is
 needed is a binary ``.nii`` format lesion mask, with ones indicating
 lesioned tissue, and zeros elsewhere.
 
-    (Note: we terms like 'lesion' and 'damage' throughout most of this
+    *(Note: we terms like 'lesion' and 'damage' throughout most of this
     documentation, as that is the most natural primary context for
     ConWhAt analyses. Remember however that all we are doing at the end
     of the day is doing a set of look-up operations between a list of
@@ -18,7 +18,7 @@ lesioned tissue, and zeros elsewhere.
     the connectivity effects of magnetic field or current distributions
     from nonivasive brain stimulation). Still, for concreteness and
     simplicity, we stick with 'lesion', 'damage', etc. for the most
-    part. )
+    part. )*
 
 A common way to obtain a lesion map is to from a patient's T1-weighted
 MR image. Although this can be done manually, it is strongly recommended
