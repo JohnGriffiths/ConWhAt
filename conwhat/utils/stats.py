@@ -341,10 +341,10 @@ def compute_streams_in_roi(roi_file,dpy_file,sfms,bboxes,idxs,n_jobs=1,atlas_nam
   # DON'T DO BBOX STUFF YET...
   # only read files with overlapping bounding boxes
   bbox_isol,bbox_propol = compute_roi_bbox_overlaps(bboxes,roi_file) #est_file)
-  bbox_isol_idx = np.nonzero(bbox_isol)[0]
+  bbox_isol_idx = np.nonzero(bbox_isol)[0].astype(int)
   idxsinbbox = [idx for idx in idxs if idx in bbox_isol_idx]
 
-
+  
   #def calc_streams_in_roi(dpy_file,roi_dat,stream_idxs):
   #  aff_eye = np.eye(4)
   #  D = Dpy(dpy_file, 'r')
