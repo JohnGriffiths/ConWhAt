@@ -1,5 +1,9 @@
 # ConWhAt - a library for Connectome-based White matter Atlas analyses
 
+<p align="center" >
+<img src ="docs/conwhat_atlas_fig.png" height="170"  >
+</p>
+
 ConWhAt is a tool for studying the effects of white matter damage on brain networks. 
 
 Its primary functionality is *connectome-based* white matter atlas analysis, for which it uses a set of connectome-based white matter atlases developed by our research group for this purpose, as well as (optionally) similar atlases developed by other groups. ConWhAt can also be used for more conventional *tract-based* white matter atlas analysis, and more generally for querying how spatial locations in the white matter tissue relate to different grey matter regions and brain networks. 
