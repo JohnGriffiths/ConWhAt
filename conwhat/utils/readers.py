@@ -147,7 +147,7 @@ def load_stream_file_mappings(atlas_name=None,atlas_dir=None):
   if not atlas_dir: atlas_dir = os.path.join(abd,atlas_name)
 
   F = h5py.File(atlas_dir + '/mappings.h5', 'r')
-  KVs = {k: v.value for k,v in F.items()}
+  KVs = {k: v.value.astype(int) for k,v in F.items()}
   F.close()
   mappings = pd.DataFrame(np.array(KVs.values()),
                              index=KVs.keys())
