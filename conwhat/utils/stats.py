@@ -10,6 +10,8 @@ import os,sys,yaml
 import numpy as np,networkx as nx, pandas as pd
 import nibabel as nib, nilearn as nl
 
+import nibabel as nib
+
 from dipy.io import Dpy
 from dipy.tracking.utils import target_line_based
 
@@ -380,6 +382,11 @@ def calc_streams_in_roi(dpy_file,roi_dat,stream_idxs):
   D = Dpy(dpy_file, 'r')
   streams = D.read_tracksi(stream_idxs)
   D.close()
+    
+  # hack to deal with apparent nibabel-dipy conflict
+  if type(streams) == nib.streamlines.array_sequence.ArraySequence:
+    streams = list(streams)
+    
   streamsinroi = list(target_line_based(streams,roi_dat,aff_eye))
   return streamsinroi
 
