@@ -35,7 +35,7 @@ def compute_vol_hit_stats(roi_file,vfms,bboxes,idxs,readwith='indexgzip',n_jobs=
   roi_img = nib.load(roi_file)
   roi_dat = roi_img.get_data()
 
-  if idxs == 'all': idxs = range(vfms.shape[0])
+  if idxs is 'all': idxs = range(vfms.shape[0])
 
   # only read files with overlapping bounding boxes
   bbox_isol,bbox_propol = compute_roi_bbox_overlaps(bboxes,roi_file) #est_file)
