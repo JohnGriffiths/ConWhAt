@@ -9,6 +9,7 @@ Welcome to ConWhAt's documentation!
 .. toctree::
    :maxdepth: 1
    :caption: About ConWhAt
+   :glob:
    
    about_conwhat/overview
    about_conwhat/ontology_and_representation
@@ -16,6 +17,7 @@ Welcome to ConWhAt's documentation!
 .. toctree::
    :maxdepth: 1
    :caption: Examples
+   :glob:
    
    examples/downloading_conwhat_atlases.ipynb
    examples/exploring_conwhat_atlases.ipynb
