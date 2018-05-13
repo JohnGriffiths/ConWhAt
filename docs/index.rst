@@ -6,13 +6,16 @@
 Welcome to ConWhAt's documentation!
 ===================================
 
-
 .. toctree::
-    :maxdepth: 3
-    :glob:
-  
+   :maxdepth: 1
+   :caption: About ConWhAt
+   
    about_conwhat/overview
    about_conwhat/ontology_and_representation
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Examples
    
    examples/downloading_conwhat_atlases.ipynb
    examples/exploring_conwhat_atlases.ipynb
