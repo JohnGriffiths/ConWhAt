@@ -115,7 +115,16 @@ except Exception:
 # -- Options for HTML output ----------------------------------------------
 
 html_title = project + ' version ' + release
-html_theme = 'jupyter_alabaster_theme'
+html_theme = 'sphinx_rtd_theme'
+html_theme_options = {
+    'collapse_navigation': False,
+}
+
+
+
+
+
+
 
 # -- Options for LaTeX output ---------------------------------------------
 
