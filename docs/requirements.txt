@@ -1,4 +1,7 @@
 sphinx>=1.5.1
 nbsphinx
 ipykernel
-jupyter-alabaster-theme
+sphinx_rtd_theme
+recommonmark
+nbsphinx-link
+
