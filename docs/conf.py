@@ -8,7 +8,6 @@
 extensions = [
     'nbsphinx',
     'sphinx.ext.mathjax',
-    'jupyter_alabaster_theme',
 ]
 
 # Exclude build directory and Jupyter backup files:
@@ -44,6 +43,16 @@ html_sourcelink_suffix = ''
 # If window is narrower than this, input/output prompts are on separate lines:
 #nbsphinx_responsive_width = '700px'
 
+
+# from http://docs.readthedocs.io/en/latest/getting_started.html?highlight=markdown    
+from recommonmark.parser import CommonMarkParser
+source_parsers = {
+    '.md': CommonMarkParser,
+}
+source_suffix = ['.rst', '.md']
+
+
+
 # This is processed by Jinja2 and inserted before each notebook
 nbsphinx_prolog = r"""
 {% set docname = env.doc2path(env.docname, base='doc') %}
@@ -57,9 +66,9 @@ nbsphinx_prolog = r"""
 
         This page was generated from `{{ docname }}`__.
         Interactive online version:
-        :raw-html:`<a href="https://mybinder.org/v2/gh/spatialaudio/nbsphinx/{{ env.config.release }}?filepath={{ docname }}"><img alt="Binder badge" src="https://mybinder.org/badge.svg" style="vertical-align:text-bottom"></a>`
+        :raw-html:`<a href="https://mybinder.org/v2/gh/JohnGriffiths/ConWhAt/{{ env.config.release }}?filepath={{ docname }}"><img alt="Binder badge" src="https://mybinder.org/badge.svg" style="vertical-align:text-bottom"></a>`
 
-    __ https://github.com/spatialaudio/nbsphinx/blob/
+    __ https://github.com/JohnGriffiths/ConWhAt/blob/
         {{ env.config.release }}/{{ docname }}
 
 .. raw:: latex
