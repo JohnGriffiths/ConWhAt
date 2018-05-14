@@ -3,9 +3,10 @@ channels:
 dependencies:
   - python==3.5
   - sphinx>=1.5.1
+  - nbsphinx
   - pandoc
   - nbconvert
   - ipykernel
   - pip:
-    - jupyter-alabaster-theme
-    - nbsphinx
+    - sphinx_rtd_theme
+    - nbsphinx-link
